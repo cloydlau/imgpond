@@ -1,0 +1,51 @@
+{
+  "name": "imgpond",
+  "version": "0.1.24",
+  "author": "cloydlau",
+  "description": "An image uploader based on filepond, cropping supported.",
+  "keywords": [
+    "img",
+    "image",
+    "upload",
+    "uploader",
+    "vue",
+    "filepond",
+    "crop",
+    "cropper",
+    "cropperjs"
+  ],
+  "private": false,
+  "license": "MIT",
+  "main": "dist/imgpond.umd.min.js",
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lib": "vue-cli-service build --target lib --name imgpond src/main.js",
+    "pub": "npm run lib && yrm use npm && npm publish"
+  },
+  "dependencies": {
+    "core-js": "~3.6.0",
+    "filepond": "~4.13.7",
+    "filepond-plugin-file-validate-type": "~1.2.5",
+    "filepond-plugin-image-preview": "~4.6.4",
+    "vue-cropperjs": "~4.1.0",
+    "vue-filepond": "~6.0.2"
+  },
+  "peerDependencies": {
+    "element-ui": "^2.13.2",
+    "pic-viewer": ">= 0.2.5",
+    "plain-kit": "^0.2.3",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.4.0",
+    "@vue/cli-service": "^4.4.0",
+    "element-ui": "^2.13.2",
+    "pic-viewer": "^0.2.5",
+    "plain-kit": "^0.2.3",
+    "sass": "^1.26.0",
+    "sass-loader": "^8.0.2",
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
