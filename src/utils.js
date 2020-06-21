@@ -19,3 +19,11 @@ export function getOrigin (url) {
   const urlObj = new URL(url)
   return `${urlObj.protocol}//${urlObj.host}`
 }
+
+export function file2Base64 (file, callback) {
+  let fileReader = new FileReader()
+  fileReader.onload = e => {
+    typeof callback === 'function' && callback(e.target.result)
+  }
+  fileReader.readAsDataURL(file)
+}

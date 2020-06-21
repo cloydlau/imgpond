@@ -54,7 +54,10 @@
 export default {
   data () {
     return {
-      value: '',
+      value: [
+        'https://placem.at/people?random=1&txt=0&w=500&h=500',
+        'https://placem.at/people?random=1&txt=0&w=1000&h=500',
+      ],
       fixedRatio: undefined,
       count: 50,
       disabled: false,

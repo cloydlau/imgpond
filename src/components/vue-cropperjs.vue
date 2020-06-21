@@ -38,6 +38,7 @@
 import 'cropperjs/dist/cropper.css'
 import VueCropper from 'vue-cropperjs'
 import { warn } from 'plain-kit'
+import { file2Base64 } from '../utils'
 
 export default {
   props: {
@@ -80,12 +81,10 @@ export default {
     },
     fileToBase64 () {
       if (this.file) {
-        let fileReader = new FileReader()
-        fileReader.onload = e => {
-          this.imgSrc = e.target.result
-          this.$refs.cropper.replace(e.target.result)
-        }
-        fileReader.readAsDataURL(this.file)
+        file2Base64(this.file, base64 => {
+          this.imgSrc = base64
+          this.$refs.cropper.replace(base64)
+        })
       } else {
         this.imgSrc = ''
       }
@@ -102,7 +101,7 @@ export default {
       }
 
       this.$refs.cropper.getCroppedCanvas().toBlob(blob => {
-        console.log('裁剪后：', blob)
+        console.log('【裁剪后】', blob)
         this.$emit('stopCrop', blob)
       }, this.file.type) //第三个参数为质量 默认＜1
     },

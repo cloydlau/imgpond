@@ -32,7 +32,9 @@ Vue.use(Imgpond, {
   //代理
   proxy: {},
   //压缩提示内容
-  sizeExceededWarningHTML: ``
+  sizeExceededWarningHTML: ``,
+  //基于filepond/element 默认filepond
+  poweredBy: 'element',
 })
 
 Vue.config.productionTip = false

@@ -2,40 +2,63 @@
   <div>
     <PicViewer v-if="disabled" :value="files" objectKey="source"/>
 
-    <div v-else>
-      <file-pond
-              ref="filePond"
-              :label-idle="'点击上传'+(this.fixedRatioText?'（宽高比'+this.fixedRatioText+'）':'')"
-              :allowDrop="false"
-              :allowReorder="true"
-              :allowMultiple="Count!==1"
-              :accepted-file-types="Object.keys(format).join(', ')"
-              labelFileTypeNotAllowed="不支持的格式，请删除"
-              fileValidateTypeLabelExpectedTypes="仅支持{allButLastType}和{lastType}"
-              :fileValidateTypeLabelExpectedTypesMap="format"
-              :server="server"
-              :files="files"
-              :max-files="Count||null"
-              @init="handleFilePondInit"
-              :beforeAddFile="beforeAddFile"
-              @activatefile="onActivatefile"
-              :disabled="disabled"
-              @onaddfilestart="onAddFileStart"
-              styleItemPanelAspectRatio="1"
-              @updatefiles="onUpdateFiles"
-              :beforeRemoveFile="beforeRemoveFile"
-              :onwarning="onWarning"
-              @reorderfiles="emitChange"
+    <div v-else :class="{'full': isFull}">
+      <el-upload v-if="poweredBy==='element'"
+                 ref="element-upload"
+                 action="#"
+                 :auto-upload="!Edit"
+                 list-type="picture-card"
+                 :file-list="files"
+                 :disabled="disabled"
+                 :limit="Count"
+                 :multiple="Count!==1"
+                 :accept="formatList"
+                 :on-change="element_onChange"
+                 :on-preview="onActivatefile"
+                 :on-remove="element_onRemove"
+                 :on-exceed="onWarning"
+                 :on-success="element_onSuccess"
+                 :on-error="element_onError"
+                 :http-request="element_httpRequest"
+      >
+        <i class="el-icon-plus"/>
+      </el-upload>
+
+      <file-pond v-else
+                 ref="filePond"
+                 :label-idle="'点击上传'+(this.fixedRatioText?'（宽高比'+this.fixedRatioText+'）':'')"
+                 :allowDrop="false"
+                 :allowReorder="true"
+                 :allowMultiple="Count!==1"
+                 :accepted-file-types="Object.keys(format).join(', ')"
+                 labelFileTypeNotAllowed="不支持的格式，请删除"
+                 fileValidateTypeLabelExpectedTypes="仅支持{allButLastType}和{lastType}"
+                 :fileValidateTypeLabelExpectedTypesMap="format"
+                 :server="server"
+                 :files="files"
+                 :max-files="Count||null"
+                 @init="handleFilePondInit"
+                 :beforeAddFile="beforeAddFile"
+                 @activatefile="onActivatefile"
+                 :disabled="disabled"
+                 @onaddfilestart="onAddFileStart"
+                 styleItemPanelAspectRatio="1"
+                 @updatefiles="onUpdateFiles"
+                 :beforeRemoveFile="beforeRemoveFile"
+                 :onwarning="onWarning"
+                 @reorderfiles="emitChange"
       />
 
-      <el-dialog title='图片编辑' :visible.sync="cropper.show" :close-on-click-modal="false" :append-to-body="true"
+      <el-dialog title='图片编辑'
+                 :visible.sync="cropper.show"
+                 :close-on-click-modal="false"
+                 :append-to-body="true"
                  destroy-on-close>
-        <Cropper
-                ref="crop"
-                :file="cropper.file"
-                :aspectRatio="aspectRatio"
-                :fixedRatioText="fixedRatioText"
-                @stopCrop="stopCrop"/>
+        <Cropper ref="crop"
+                 :file="cropper.file"
+                 :aspectRatio="aspectRatio"
+                 :fixedRatioText="fixedRatioText"
+                 @stopCrop="stopCrop"/>
         <div slot="footer">
           <!--<el-switch
              v-model="compression.on"
@@ -52,15 +75,15 @@
         </div>
       </el-dialog>
     </div>
-    <el-dialog :visible.sync="preview.show" title="预览" :close-on-click-modal="false" :append-to-body="true"
-               @closed="()=>{preview.src=null}">
+    <el-dialog :visible.sync="preview.show" title="预览" :append-to-body="true" @closed="()=>{preview.src=null}">
       <img width="100%" :src="preview.src" alt="">
     </el-dialog>
   </div>
 </template>
 
 <script>
-import Cropper from './vue-cropperjs'
+import Sortable from 'sortablejs'
+import Cropper from './components/vue-cropperjs'
 import vueFilePond from 'vue-filepond'
 import 'filepond/dist/filepond.min.css'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
@@ -75,11 +98,13 @@ import {
   globalCount,
   globalEdit,
   globalMaxSize,
-  fixedRatioDeviation
+  fixedRatioDeviation,
+  poweredBy,
 } from './config'
 import { PicViewer } from 'pic-viewer'
 import { isEmpty, warn, confirmation } from 'plain-kit'
 import { isArrayJSON, getOrigin } from './utils'
+import ElementUpload from './element-upload'
 
 const FilePond = vueFilePond(
   FilePondPluginImagePreview,
@@ -90,6 +115,7 @@ const MB = Math.pow(1024, 2)
 
 export default {
   name: 'Imgpond',
+  mixins: [ElementUpload],
   components: { FilePond, Cropper, PicViewer },
   props: {
     fixedRatio: [Array, String],
@@ -140,6 +166,9 @@ export default {
     event: 'change'
   },
   computed: {
+    isFull () {
+      return this.files.length >= this.Count
+    },
     fixedRatioText () {
       if (this.fixedRatio) {
         if (this.fixedRatio instanceof Array) {
@@ -170,11 +199,12 @@ export default {
   },
   data () {
     return {
+      poweredBy,
       need2Crop: true,
       aspectRatio: undefined,
       format: {
-        'image/jpeg': 'jpg, jpeg',
-        'image/png': 'png'
+        'image/jpeg': '.jpg, .jpeg',
+        'image/png': '.png'
       },
       preview: {
         show: false,
@@ -257,6 +287,7 @@ export default {
           if (newVal.length > 0 && newVal.length !== this.files.length) {
             this.files = newVal.map(v => {
               return {
+                url: v, //element
                 source: v,
                 options: {
                   type: 'local'
@@ -269,6 +300,14 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    Sortable.create(document.querySelector('.el-upload-list'), {
+      onEnd: ({ newIndex, oldIndex }) => {
+        [this.files[oldIndex], this.files[newIndex]] = [this.files[newIndex], this.files[oldIndex]]
+        this.emitChange(this.files)
+      }
+    })
   },
   methods: {
     onWarning () {
@@ -295,7 +334,7 @@ export default {
       }
     },
     onActivatefile (file) {
-      this.preview.src = file.source
+      this.preview.src = file.source || file.url //兼容element
       this.preview.show = true
     },
     handleFilePondInit: function () {
@@ -336,6 +375,7 @@ export default {
         const format = item.file.name.replace(/.+\./, '').toLowerCase()
         if (!this.formatList.includes(format)) {
           warn('仅支持' + this.formatList)
+          item.fileList && item.fileList.splice(item.fileList.indexOf(item.file), 1)
           return false
         }
         if (item.file.size > this.MaxSize * MB) {
@@ -344,10 +384,11 @@ export default {
             html: sizeExceededWarningHTML,
             timer: sizeExceededWarningHTML ? 5000 : 3000
           })
+          item.fileList && item.fileList.splice(item.fileList.indexOf(item.file), 1)
           return false
         }
         //this.compression.on = this.compress && item.file.size >= .2 * MB
-        console.log('裁剪前：', item.file)
+        console.log('【裁剪前】', item.file)
         if (this.Edit) {
           if (this.fixedRatio) {
             this.need2Crop = await this.handleAspectRatio(item.file)
@@ -362,7 +403,9 @@ export default {
           }
         } else {
           this.load()
-          this.upload({ file: item.file })
+          if (poweredBy === 'filepond') {
+            this.upload({ file: item.file })
+          }
         }
         return false
       } else {
@@ -387,7 +430,18 @@ export default {
     stopCrop (blob) {
       if (blob) {
         let file = new File([blob], this.cropper.file.name, { type: blob.type })
-        this.upload({ file })
+        if (poweredBy === 'element') {
+          let uploadFiles = this.$refs['element-upload'].uploadFiles[this.$refs['element-upload'].uploadFiles.length - this.cropper.queue.length - 1]
+          file.uid = uploadFiles.raw.uid //uid影响progress等回调的判断
+          uploadFiles.raw = file
+          if (this.cropper.queue.length === 0) {
+            this.$refs['element-upload'].submit()
+          } else {
+            this.loaded()
+          }
+        } else {
+          this.upload({ file })
+        }
         this.closeCropper()
       } else {
         this.loaded()
@@ -416,9 +470,12 @@ export default {
         const promise = api({ ...this.param, file })
         if (promise) {
           promise.then(res => {
-            this.$refs.filePond.addFile(res && typeof res === 'string' ? res : res.data, { type: 'local' }).finally(file => {
-              this.loaded()
-            })
+            const source = res && typeof res === 'string' ? res : res.data
+            if (source) {
+              this.$refs.filePond.addFile(source, { type: 'local' }).finally(file => {
+                this.loaded()
+              })
+            }
           }).catch(e => {
             this.loaded()
           })
@@ -461,7 +518,15 @@ export default {
     },
     noCrop () {
       this.load()
-      this.upload({ file: this.cropper.file })
+      if (poweredBy === 'element') {
+        if (this.cropper.queue.length === 0) {
+          this.$refs['element-upload'].submit()
+        } else {
+          this.loaded()
+        }
+      } else {
+        this.upload({ file: this.cropper.file })
+      }
       this.closeCropper()
     },
   }
@@ -487,5 +552,17 @@ export default {
 ::v-deep .el-button-group {
   margin-left: 16px;
   margin-bottom: 1px;
+}
+
+.full ::v-deep .el-upload--picture-card {
+  display: none;
+}
+
+::v-deep .el-upload-list__item {
+  transition: none !important;
+
+  .el-upload-list__item-thumbnail {
+    object-fit: contain;
+  }
 }
 </style>
