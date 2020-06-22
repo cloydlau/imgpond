@@ -16,7 +16,9 @@ Vue.use(Imgpond, {
    * 可选参数
    */
   //axios实例
-  request: null,
+  request: () => new Promise(resolve => {
+    resolve('https://placem.at/people?random=1&txt=0&w=1000&h=500')
+  }),
   //上传接口参数（除二进制文件以外的其他参数 二进制文件默认会以file作为参数名）
   param: {},
   //上传数量限制 默认50
@@ -33,8 +35,8 @@ Vue.use(Imgpond, {
   proxy: {},
   //压缩提示内容
   sizeExceededWarningHTML: ``,
-  //基于filepond/element 默认filepond
-  poweredBy: 'element',
+  //基于filepond或element 默认filepond 如果你的图片服务器不支持跨域 则仅能使用element
+  poweredBy: 'filepond',
 })
 
 Vue.config.productionTip = false

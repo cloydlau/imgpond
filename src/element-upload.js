@@ -45,15 +45,16 @@ export default {
         promise.then(res => {
           const source = res && typeof res === 'string' ? res : res.data
           if (source) {
-            item.onSuccess(source, item.file)
+            //item.onSuccess(source, item.file)
+            this.element_onSuccess(source, item.file)
           }
         }).catch(e => {
           item.onError(e)
         })
       } else {
         file2Base64(item.file, base64 => {
-          this.element_onSuccess(base64, item.file)
           //item.onSuccess(base64) //多选时只触发一次
+          this.element_onSuccess(base64, item.file)
         })
       }
     }

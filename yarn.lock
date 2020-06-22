@@ -5889,10 +5889,10 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-plain-kit@^0.2.8:
-  version "0.2.8"
-  resolved "https://registry.npmjs.org/plain-kit/-/plain-kit-0.2.8.tgz#2d5ca25f32b1521caba010d729595fa3a05d6320"
-  integrity sha512-eT8nW31vmlpNObQu94X9h+8B7DJ4YhvJCT55Vf7CsVgYYMCQ3pF47aoioVzP4LivBp+v07CGCekJyo/Kip2hKQ==
+plain-kit@^0.2.9:
+  version "0.2.9"
+  resolved "https://registry.npm.taobao.org/plain-kit/download/plain-kit-0.2.9.tgz#6208890a9e33231d304a8b0c8475e92bdad78bb4"
+  integrity sha1-YgiJCp4zIx0wSosMhHXpK9rXi7Q=
   dependencies:
     animate.css "^4.1.0"
     core-js "^3.6.0"
@@ -5900,8 +5900,8 @@ plain-kit@^0.2.8:
     lodash "^4.17.15"
     qrcode "^1.4.4"
     qs "^6.9.4"
-    sweetalert2 "^9.14.4"
-    time-range-picker "^0.1.18"
+    sweetalert2 "^9.15.1"
+    time-range-picker "^0.1.19"
     vuex "^3.4.0"
 
 pngjs@^3.3.0:
@@ -7421,10 +7421,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-sweetalert2@^9.14.4:
-  version "9.15.0"
-  resolved "https://registry.npmjs.org/sweetalert2/-/sweetalert2-9.15.0.tgz#058d9100fc039166b14feff7f7a917f42af801ab"
-  integrity sha512-GC8JOe5R+/FlCLwBQoeCWian1KbwAlTrTwbTh4o0IlTd/kwKDPjWjOIlYHjievchILyVF3EddyNeyuOBNCtXpg==
+sweetalert2@^9.15.1:
+  version "9.15.1"
+  resolved "https://registry.npm.taobao.org/sweetalert2/download/sweetalert2-9.15.1.tgz#d0c2da861a1945626c9c145b48611c1bf0f68ba9"
+  integrity sha1-0MLahhoZRWJsnBRbSGEcG/D2i6k=
 
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"
@@ -7528,10 +7528,10 @@ time-range-picker@^0.1.0:
     core-js "^3.6.4"
     time-range-picker "^0.1.0"
 
-time-range-picker@^0.1.18:
-  version "0.1.18"
-  resolved "https://registry.npmjs.org/time-range-picker/-/time-range-picker-0.1.18.tgz#580168b25ab89f247fb7dbfb80d60897b136a7ff"
-  integrity sha512-R9FW5PYXsW4qLreCENeUywVE0KkDSbL+95sCE+jAKCVfusXHAbUZWJlINtUUUhHvUuA4MMW31qtGk5NxAz7MzA==
+time-range-picker@^0.1.19:
+  version "0.1.19"
+  resolved "https://registry.npm.taobao.org/time-range-picker/download/time-range-picker-0.1.19.tgz#982e4ced07c9cf7b1cf247d5a8f7e529e0a69dca"
+  integrity sha1-mC5M7QfJz3sc8kfVqPflKeCmnco=
   dependencies:
     core-js "^3.6.4"
     dayjs "^1.8.26"

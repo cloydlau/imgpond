@@ -53,7 +53,8 @@
                  :visible.sync="cropper.show"
                  :close-on-click-modal="false"
                  :append-to-body="true"
-                 destroy-on-close>
+                 destroy-on-close
+      >
         <Cropper ref="crop"
                  :file="cropper.file"
                  :aspectRatio="aspectRatio"
@@ -284,7 +285,7 @@ export default {
             const arr = isArrayJSON(newVal)
             newVal = arr ? arr : [newVal]
           }
-          if (newVal.length > 0 && newVal.length !== this.files.length) {
+          if (newVal.length > 0 && newVal.length !== (oldVal ? oldVal?.length : 0)) {
             this.files = newVal.map(v => {
               return {
                 url: v, //element
@@ -302,12 +303,14 @@ export default {
     }
   },
   mounted () {
-    Sortable.create(document.querySelector('.el-upload-list'), {
-      onEnd: ({ newIndex, oldIndex }) => {
-        [this.files[oldIndex], this.files[newIndex]] = [this.files[newIndex], this.files[oldIndex]]
-        this.emitChange(this.files)
-      }
-    })
+    if (poweredBy === 'element') {
+      Sortable.create(document.querySelector('.el-upload-list'), {
+        onEnd: ({ newIndex, oldIndex }) => {
+          [this.files[oldIndex], this.files[newIndex]] = [this.files[newIndex], this.files[oldIndex]]
+          this.emitChange(this.files)
+        }
+      })
+    }
   },
   methods: {
     onWarning () {
@@ -427,26 +430,6 @@ export default {
         })
       })
     },
-    stopCrop (blob) {
-      if (blob) {
-        let file = new File([blob], this.cropper.file.name, { type: blob.type })
-        if (poweredBy === 'element') {
-          let uploadFiles = this.$refs['element-upload'].uploadFiles[this.$refs['element-upload'].uploadFiles.length - this.cropper.queue.length - 1]
-          file.uid = uploadFiles.raw.uid //uid影响progress等回调的判断
-          uploadFiles.raw = file
-          if (this.cropper.queue.length === 0) {
-            this.$refs['element-upload'].submit()
-          } else {
-            this.loaded()
-          }
-        } else {
-          this.upload({ file })
-        }
-        this.closeCropper()
-      } else {
-        this.loaded()
-      }
-    },
     upload (param) {
       /*if (this.compress) {
         const that = this
@@ -504,12 +487,44 @@ export default {
         this.cropper.loading = false
       }
     },
-    closeCropper () {
+    //点击取消时会触发两次
+    closeCropper (isCancel = true) {
+      debugger
       if (this.cropper.queue.length > 0) {
         this.cropper.file = this.cropper.queue.shift()
       } else {
+        if (this.cropper.file) {
+          if (poweredBy === 'element' && isCancel) {
+            const uploadFiles = this.$refs['element-upload'].uploadFiles
+            const deprecatedFiles = [this.cropper.file, ...this.cropper.queue]
+            deprecatedFiles.map(v => {
+              uploadFiles.splice(uploadFiles.indexOf(v), 1)
+            })
+          }
+
+        }
         this.cropper.file = null
         this.cropper.show = false
+      }
+    },
+    stopCrop (blob) {
+      if (blob) {
+        let file = new File([blob], this.cropper.file.name, { type: blob.type })
+        if (poweredBy === 'element') {
+          let uploadFiles = this.$refs['element-upload'].uploadFiles[this.$refs['element-upload'].uploadFiles.length - this.cropper.queue.length - 1]
+          file.uid = uploadFiles.raw.uid //uid影响progress等回调的判断
+          uploadFiles.raw = file
+          if (this.cropper.queue.length === 0) {
+            this.$refs['element-upload'].submit()
+          } else {
+            this.loaded()
+          }
+        } else {
+          this.upload({ file })
+        }
+        this.closeCropper(false)
+      } else {
+        this.loaded()
       }
     },
     save () {
@@ -527,7 +542,7 @@ export default {
       } else {
         this.upload({ file: this.cropper.file })
       }
-      this.closeCropper()
+      this.closeCropper(false)
     },
   }
 }
