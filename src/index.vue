@@ -54,6 +54,7 @@
                  :close-on-click-modal="false"
                  :append-to-body="true"
                  destroy-on-close
+                 @close="onCropperClose"
       >
         <Cropper ref="crop"
                  :file="cropper.file"
@@ -487,23 +488,21 @@ export default {
         this.cropper.loading = false
       }
     },
-    //点击取消时会触发两次
-    closeCropper (isCancel = true) {
-      debugger
+    onCropperClose () {
+      if (poweredBy === 'element') {
+        const uploadFiles = this.$refs['element-upload'].uploadFiles
+        const deprecatedFiles = [this.cropper.file, ...this.cropper.queue]
+        deprecatedFiles.map(v => {
+          v && uploadFiles.splice(uploadFiles.indexOf(v), 1)
+        })
+      }
+      this.cropper.queue.length = 0
+      this.cropper.file = null
+    },
+    closeCropper () {
       if (this.cropper.queue.length > 0) {
         this.cropper.file = this.cropper.queue.shift()
       } else {
-        if (this.cropper.file) {
-          if (poweredBy === 'element' && isCancel) {
-            const uploadFiles = this.$refs['element-upload'].uploadFiles
-            const deprecatedFiles = [this.cropper.file, ...this.cropper.queue]
-            deprecatedFiles.map(v => {
-              uploadFiles.splice(uploadFiles.indexOf(v), 1)
-            })
-          }
-
-        }
-        this.cropper.file = null
         this.cropper.show = false
       }
     },
@@ -522,7 +521,7 @@ export default {
         } else {
           this.upload({ file })
         }
-        this.closeCropper(false)
+        this.closeCropper()
       } else {
         this.loaded()
       }
@@ -542,7 +541,7 @@ export default {
       } else {
         this.upload({ file: this.cropper.file })
       }
-      this.closeCropper(false)
+      this.closeCropper()
     },
   }
 }
