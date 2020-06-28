@@ -216,7 +216,8 @@ export default {
         queue: [],
         show: false,
         file: '',
-        loading: false
+        loading: false,
+        submitted: false
       },
       /*compression: {
         on: true,
@@ -495,16 +496,31 @@ export default {
         deprecatedFiles.map(v => {
           v && uploadFiles.splice(uploadFiles.indexOf(v), 1)
         })
+        !this.cropper.submitted && this.$refs['element-upload'].submit()
       }
       this.cropper.queue.length = 0
       this.cropper.file = null
+      this.cropper.submitted = false
     },
-    closeCropper () {
+    closeCropper (isCancel = true) {
       if (this.cropper.queue.length > 0) {
+        if (poweredBy === 'element' && isCancel) {
+          const uploadFiles = this.$refs['element-upload'].uploadFiles
+          for (let [i, v] of uploadFiles.entries()) {
+            if (v.raw === this.cropper.file) {
+              uploadFiles.splice(i, 1)
+              break
+            }
+          }
+        }
         this.cropper.file = this.cropper.queue.shift()
       } else {
         this.cropper.show = false
       }
+    },
+    save () {
+      this.load()
+      this.$refs.crop.cropImage()
     },
     stopCrop (blob) {
       if (blob) {
@@ -515,33 +531,31 @@ export default {
           uploadFiles.raw = file
           if (this.cropper.queue.length === 0) {
             this.$refs['element-upload'].submit()
+            this.cropper.submitted = true
           } else {
             this.loaded()
           }
         } else {
           this.upload({ file })
         }
-        this.closeCropper()
+        this.closeCropper(false)
       } else {
         this.loaded()
       }
-    },
-    save () {
-      this.load()
-      this.$refs.crop.cropImage()
     },
     noCrop () {
       this.load()
       if (poweredBy === 'element') {
         if (this.cropper.queue.length === 0) {
           this.$refs['element-upload'].submit()
+          this.cropper.submitted = true
         } else {
           this.loaded()
         }
       } else {
         this.upload({ file: this.cropper.file })
       }
-      this.closeCropper()
+      this.closeCropper(false)
     },
   }
 }
