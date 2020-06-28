@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "core-js": "~3.6.0",
-    "filepond": "~4.18.0",
+    "filepond": "~4.17.1",
     "filepond-plugin-file-validate-type": "~1.2.5",
     "filepond-plugin-image-preview": "~4.6.4",
     "sortablejs": "^1.10.2",

@@ -7,9 +7,10 @@
                        :src="imgSrc"
                        :containerStyle="containerStyle"
                        preview=".preview"
-                       :ready="onReady"
                        :minContainerHeight="500"
                        background
+                       :ready="onReady"
+                       :cropmove="onCropmove"
           />
         </div>
         <div class="actions">
@@ -54,6 +55,7 @@ export default {
   },
   data () {
     return {
+      untouched: true,
       imgSrc: '',
       containerStyle: {
         height: '500px',
@@ -69,6 +71,9 @@ export default {
     }
   },
   methods: {
+    onCropmove () {
+      this.untouched = false
+    },
     onReady () {
       const { width, height, left, top } = this.$refs.cropper.getCanvasData()
       if (this.aspectRatio && typeof this.aspectRatio === 'number') {
@@ -130,6 +135,8 @@ export default {
     },
     reset () {
       this.$refs.cropper.reset()
+      this.onReady()
+      this.untouched = true
     },
     rotate (deg) {
       this.$refs.cropper.rotate(deg)

@@ -69,11 +69,7 @@
              style="margin-right:1rem;">
           </el-switch>-->
           <el-button @click="closeCropper" v-text="'取 消'"/>
-          <el-button v-if="need2Crop" type="success" plain @click="save" v-text="'确 定'"/>
-          <el-button-group v-else>
-            <el-button type="success" plain @click="save" v-text="'裁剪后上传'"/>
-            <el-button type="primary" plain @click="noCrop" v-text="'直接上传'"/>
-          </el-button-group>
+          <el-button type="primary" @click="confirm" v-text="'确 定'"/>
         </div>
       </el-dialog>
     </div>
@@ -516,6 +512,13 @@ export default {
         this.cropper.file = this.cropper.queue.shift()
       } else {
         this.cropper.show = false
+      }
+    },
+    confirm () {
+      if (this.need2Crop || !this.$refs.crop.untouched) {
+        this.save()
+      } else {
+        this.noCrop()
       }
     },
     save () {
