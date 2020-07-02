@@ -78,8 +78,18 @@ export default {
       const { width, height, left, top } = this.$refs.cropper.getCanvasData()
       if (this.aspectRatio && typeof this.aspectRatio === 'number') {
         this.$refs.cropper.setAspectRatio(this.aspectRatio)
-        this.$refs.cropper.setCropBoxData({ height, top })
-        this.$refs.cropper.setCropBoxData({ left: (this.$refs.cropper.getContainerData().width - this.$refs.cropper.getCropBoxData().width) / 2 })
+
+        //默认裁剪框在图片之内（避免裁剪出白边），也可以放大以完全框住图片（避免遗漏信息）
+        const { width: containerWidth, height: containerHeight } = this.$refs.cropper.getContainerData()
+        const { width: cropBoxWidth, height: cropBoxHeight } = this.$refs.cropper.getCropBoxData()
+        const originalRatio = width / height
+        if (this.aspectRatio > originalRatio) {
+          this.$refs.cropper.setCropBoxData({ width, left })
+          this.$refs.cropper.setCropBoxData({ top: (containerHeight - cropBoxHeight) / 2 })
+        } else {
+          this.$refs.cropper.setCropBoxData({ height, top })
+          this.$refs.cropper.setCropBoxData({ left: (containerWidth - cropBoxWidth) / 2 })
+        }
       } else {
         this.$refs.cropper.setCropBoxData({ width, height, left })
       }
