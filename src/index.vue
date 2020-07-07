@@ -303,8 +303,9 @@ export default {
   mounted () {
     if (poweredBy === 'element') {
       Sortable.create(document.querySelector('.el-upload-list'), {
+        animation: 500,
         onEnd: ({ newIndex, oldIndex }) => {
-          [this.files[oldIndex], this.files[newIndex]] = [this.files[newIndex], this.files[oldIndex]]
+          this.files.splice(newIndex, 0, this.files.splice(oldIndex, 1)[0])
           this.emitChange(this.files)
         }
       })
@@ -590,6 +591,7 @@ export default {
 }
 
 ::v-deep .el-upload-list__item {
+  user-select: none;
   transition: none !important;
 
   .el-upload-list__item-thumbnail {

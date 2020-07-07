@@ -1,6 +1,6 @@
 {
   "name": "imgpond",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "cloydlau",
   "description": "An editable and sortable image uploader powered by filepond & element",
   "keywords": [
@@ -13,7 +13,8 @@
     "crop",
     "cropper",
     "cropperjs",
-    "sortable"
+    "sortable",
+    "element"
   ],
   "private": false,
   "license": "MIT",
@@ -34,18 +35,18 @@
   },
   "peerDependencies": {
     "element-ui": "^2.13.2",
-    "pic-viewer": ">= 0.2.5",
-    "plain-kit": "^0.2.9",
+    "pic-viewer": ">= 0.2.6",
+    "plain-kit": "^0.2.10",
     "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.0",
     "@vue/cli-service": "^4.4.0",
     "element-ui": "^2.13.2",
-    "pic-viewer": "^0.2.5",
-    "plain-kit": "^0.2.9",
+    "pic-viewer": "^0.2.6",
+    "plain-kit": "^0.2.10",
     "sass": "^1.26.0",
-    "sass-loader": "^8.0.2",
+    "sass-loader": "^9.0.0",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
   }
