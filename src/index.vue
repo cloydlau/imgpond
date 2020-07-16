@@ -22,6 +22,7 @@
                  :http-request="element_httpRequest"
       >
         <i class="el-icon-plus"/>
+        <div class="el-upload__text">{{this.fixedRatioText?'宽高比'+this.fixedRatioText:''}}</div>
       </el-upload>
 
       <file-pond v-else
@@ -586,16 +587,27 @@ export default {
   margin-bottom: 1px;
 }
 
-.full ::v-deep .el-upload--picture-card {
-  display: none;
-}
-
 ::v-deep .el-upload-list__item {
   user-select: none;
   transition: none !important;
 
   .el-upload-list__item-thumbnail {
     object-fit: contain;
+  }
+}
+
+.full ::v-deep .el-upload--picture-card {
+  display: none;
+}
+
+::v-deep .el-upload--picture-card {
+  position: relative;
+
+  .el-upload__text {
+    position: absolute;
+    top: 25px;
+    width: 100%;
+    color: lightblue;
   }
 }
 </style>

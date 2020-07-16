@@ -5,8 +5,12 @@ import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 Vue.use(ElementUI)
 
-import Imgpond from '../src/main.js'
-//todo: import Imgpond from 'imgpond'
+/**
+ * 全局参数会被组件props中的同名参数（如果有）的值覆盖
+ */
+//import Imgpond from '../src/main.js' //dev
+import Imgpond from '../dist/imgpond.umd' //prod
+//import Imgpond from 'imgpond' //todo
 //import request from '@/utils/request'
 Vue.use(Imgpond, {
   //上传接口地址
@@ -36,7 +40,7 @@ Vue.use(Imgpond, {
   //压缩提示内容
   sizeExceededWarningHTML: ``,
   //基于filepond或element 默认filepond 如果你的图片服务器不支持跨域 则仅能使用element
-  poweredBy: 'filepond',
+  poweredBy: 'element',
 })
 
 Vue.config.productionTip = false
