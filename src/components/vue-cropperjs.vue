@@ -91,7 +91,7 @@ export default {
           this.$refs.cropper.setCropBoxData({ left: (containerWidth - cropBoxWidth) / 2 })
         }
       } else {
-        this.$refs.cropper.setCropBoxData({ width, height, left })
+        this.$refs.cropper.setCropBoxData({ width, height, left, top })
       }
     },
     fileToBase64 () {
