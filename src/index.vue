@@ -22,7 +22,7 @@
                  :http-request="element_httpRequest"
       >
         <i class="el-icon-plus"/>
-        <div class="el-upload__text">{{this.fixedRatioText?'宽高比'+this.fixedRatioText:''}}</div>
+        <div class="el-upload__text">{{this.fixedRatioText ? '宽高比' + this.fixedRatioText : ''}}</div>
       </el-upload>
 
       <file-pond v-else
@@ -216,6 +216,7 @@ export default {
         loading: false,
         submitted: false
       },
+      loadingCount: 0, //针对多选情况
       /*compression: {
         on: true,
         quality: 0.8
@@ -408,9 +409,11 @@ export default {
           this.load()
           if (poweredBy === 'filepond') {
             this.upload({ file: item.file })
+          } else {
+            this.$refs['element-upload'].submit()
+            item.fileList && item.fileList.splice(item.fileList.indexOf(item.file), 1)
           }
         }
-        item.fileList && item.fileList.splice(item.fileList.indexOf(item.file), 1)
         return false
       } else {
         return true
@@ -475,6 +478,7 @@ export default {
       }
     },
     load () {
+      this.loadingCount++
       if (this.cropper.loading) {
         return
       }
@@ -483,7 +487,8 @@ export default {
       })
     },
     loaded () {
-      if (this.cropper.loading) {
+      this.loadingCount--
+      if (this.cropper.loading && this.loadingCount === 0) {
         this.cropper.loading.close()
         this.cropper.loading = false
       }

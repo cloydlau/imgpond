@@ -21,8 +21,8 @@ export default {
       }
     },
     element_onRemove (file, fileList) {
+      this.files.splice(fileList.indexOf(file), 1)
       this.emitChange(fileList)
-      //fileList.splice(fileList.indexOf(file), 1)
     },
     element_beforeUpload (file) {
       console.log('before-upload')
