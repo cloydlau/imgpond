@@ -1,6 +1,6 @@
 {
   "name": "imgpond",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "author": "cloydlau",
   "description": "An editable and sortable image uploader powered by filepond & element",
   "keywords": [
