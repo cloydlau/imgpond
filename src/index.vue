@@ -6,7 +6,7 @@
       <el-upload v-if="poweredBy==='element'"
                  ref="element-upload"
                  action="#"
-                 :auto-upload="!Edit"
+                 :auto-upload="false"
                  list-type="picture-card"
                  :file-list="files"
                  :disabled="disabled"
@@ -340,7 +340,7 @@ export default {
       this.preview.src = file.source || file.url //兼容element
       this.preview.show = true
     },
-    handleFilePondInit: function () {
+    handleFilePondInit () {
     },
     handleAspectRatio (file) {
       if (typeof this.fixedRatio === 'string') {
@@ -410,6 +410,7 @@ export default {
             this.upload({ file: item.file })
           }
         }
+        item.fileList && item.fileList.splice(item.fileList.indexOf(item.file), 1)
         return false
       } else {
         return true
