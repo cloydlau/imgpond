@@ -8,8 +8,8 @@ Vue.use(ElementUI)
 /**
  * 全局参数会被组件props中的同名参数（如果有）的值覆盖
  */
-//import Imgpond from '../src/main.js' //dev
-import Imgpond from '../dist/imgpond.umd' //prod
+import Imgpond from '../src/main.js' //dev
+//import Imgpond from '../dist/imgpond.umd' //prod
 //import Imgpond from 'imgpond' //todo
 //import request from '@/utils/request'
 Vue.use(Imgpond, {

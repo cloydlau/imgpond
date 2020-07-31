@@ -487,7 +487,10 @@ export default {
       })
     },
     loaded () {
-      this.loadingCount--
+      //开启裁剪时load和loaded为多对一的关系 没开时一对一
+      if (this.loadingCount > 0) {
+        this.loadingCount--
+      }
       if (this.cropper.loading && this.loadingCount === 0) {
         this.cropper.loading.close()
         this.cropper.loading = false
