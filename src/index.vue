@@ -75,7 +75,7 @@
       </el-dialog>
     </div>
     <el-dialog :visible.sync="preview.show" title="预览" :append-to-body="true" @closed="()=>{preview.src=null}">
-      <img width="100%" :src="preview.src" alt="">
+      <img width="100%" :src="preview.src" alt="" class="preview-img">
     </el-dialog>
   </div>
 </template>
@@ -615,5 +615,9 @@ export default {
     width: 100%;
     color: lightblue;
   }
+}
+
+.preview-img {
+  background-color: rgba(0, 0, 0, .5); //针对png
 }
 </style>
