@@ -33,9 +33,9 @@ Vue.use(Imgpond, {
   maxSize: 10,
   //固定裁剪比例误差范围 默认在＜±10%时不裁剪直接上传
   fixedRatioDeviation: 0.1,
-  //本地代理
+  //本地代理（如果poweredBy使用element则无需配置）
   localProxy: {},
-  //代理
+  //代理（如果poweredBy使用element则无需配置）
   proxy: {},
   //压缩提示内容
   sizeExceededWarningHTML: ``,

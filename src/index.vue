@@ -22,7 +22,7 @@
                  :http-request="element_httpRequest"
       >
         <i class="el-icon-plus"/>
-        <div class="el-upload__text">{{this.fixedRatioText ? '宽高比' + this.fixedRatioText : ''}}</div>
+        <div class="el-upload__text">{{ this.fixedRatioText ? '宽高比' + this.fixedRatioText : '' }}</div>
       </el-upload>
 
       <file-pond v-else
@@ -327,6 +327,10 @@ export default {
         tempList = tempList.toString()
       }
       this.$emit('change', tempList)
+      //fix: 外层表单校验规则为blur时 无法触发
+      if (this.$parent?.$options?._componentTag === ('el-form-item') && this.$parent.rules?.trigger === 'blur') {
+        this.$parent.$emit('el.form.blur')
+      }
     },
     onUpdateFiles (files) {
       //更新value
