@@ -1,8 +1,12 @@
 <template>
   <div>
-    <PicViewer v-if="disabled" :value="files" objectKey="source"/>
+    <PicViewer v-show="disabled"
+               :value="files"
+               ref="PicViewer"
+               objectKey="source"
+    />
 
-    <div v-else :class="{'full': isFull}">
+    <div v-if="!disabled" :class="{'full': isFull}">
       <el-upload v-if="poweredBy==='element'"
                  ref="element-upload"
                  action="#"
@@ -40,14 +44,14 @@
                  :max-files="Count||null"
                  @init="handleFilePondInit"
                  :beforeAddFile="beforeAddFile"
-                 @activatefile="onActivatefile"
                  :disabled="disabled"
                  @onaddfilestart="onAddFileStart"
                  styleItemPanelAspectRatio="1"
                  @updatefiles="onUpdateFiles"
                  :beforeRemoveFile="beforeRemoveFile"
                  :onwarning="onWarning"
-                 @reorderfiles="emitChange"
+                 @reorderfiles.stop="emitChange"
+                 @activatefile="onActivatefile"
       />
 
       <el-dialog title='图片编辑'
@@ -74,20 +78,12 @@
         </div>
       </el-dialog>
     </div>
-    <el-dialog :visible.sync="preview.show" title="预览" :append-to-body="true" @closed="()=>{preview.src=null}">
-      <img width="100%" :src="preview.src" alt="" class="preview-img">
-    </el-dialog>
   </div>
 </template>
 
 <script>
 import Sortable from 'sortablejs'
 import Cropper from './components/vue-cropperjs'
-import vueFilePond from 'vue-filepond'
-import 'filepond/dist/filepond.min.css'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import {
   api,
   request,
@@ -105,9 +101,21 @@ import { isEmpty, warn, confirmation } from 'plain-kit'
 import { isArrayJSON, getOrigin } from './utils'
 import ElementUpload from './element-upload'
 
+import vueFilePond from 'vue-filepond'
+import 'filepond/dist/filepond.min.css'
+
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+
+//import 'filepond-plugin-image-overlay/dist/filepond-plugin-image-overlay.css'
+//import FilePondPluginImageOverlay from 'filepond-plugin-image-overlay'
+
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+
 const FilePond = vueFilePond(
+  //FilePondPluginImageOverlay,
   FilePondPluginImagePreview,
-  FilePondPluginFileValidateType
+  FilePondPluginFileValidateType,
 )
 
 const MB = Math.pow(1024, 2)
@@ -204,10 +212,6 @@ export default {
       format: {
         'image/jpeg': '.jpg, .jpeg',
         'image/png': '.png'
-      },
-      preview: {
-        show: false,
-        src: null
       },
       cropper: {
         queue: [],
@@ -341,9 +345,8 @@ export default {
         this.emitChange(files)
       }
     },
-    onActivatefile (file) {
-      this.preview.src = file.source || file.url //兼容element
-      this.preview.show = true
+    onActivatefile ({ source, url }) {
+      this.$refs.PicViewer.preview(this.value.indexOf(url || source))
     },
     handleFilePondInit () {
     },
@@ -626,5 +629,11 @@ export default {
 
 .preview-img {
   background-color: rgba(0, 0, 0, .5); //针对png
+}
+</style>
+
+<style lang="scss">
+.filepond--fullsize-overlay {
+  z-index: 9999;
 }
 </style>
