@@ -28,3 +28,4 @@ babel.config.js
 tsconfig.json
 .env.development
 /preview*.*
+demo/
