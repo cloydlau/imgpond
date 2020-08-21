@@ -50,7 +50,7 @@
                  @updatefiles="onUpdateFiles"
                  :beforeRemoveFile="beforeRemoveFile"
                  :onwarning="onWarning"
-                 @reorderfiles.stop="emitChange"
+                 @reorderfiles="emitChange"
                  @activatefile="onActivatefile"
       />
 
