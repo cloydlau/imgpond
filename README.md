@@ -35,7 +35,22 @@ Vue.use(Imgpond, { url: '接口地址' })
 
 
 ### Quick Start
-请参考/demo中极简示例
+
+```html
+<Imgpond v-model=""/>
+```
+
+| 参数 | 说明 | 配置方式 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- | --- |
+| value / v-model | 数据对象 | | String / Array[String] | | |
+| fixedRatio | 固定裁剪比例 | 支持 | String（形如1/1） / Array（形如['1/1', '2/1']） | | undefined（不作限制） |
+| valueType | 数据类型（默认单张String多张Array） | 支持 | String | 'String' / 'Array'（不区分大小写） | undefined（自动） |
+| request | axios实例 | 全局 | Number | | 10 |
+| maxSize | 图片大小限制（单位MB） | 支持 | Number | | 10 |
+| count | 数量上限 | 支持 | Number | | 50 |
+| param | 上传接口参数 | 支持 | Object | | |
+| edit | 是否开启裁剪功能 | 支持 | Boolean | | true |
+| disabled | 是否禁用 | 支持 | Boolean | | false |
 
 
 ### Notice

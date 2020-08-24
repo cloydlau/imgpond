@@ -41,8 +41,6 @@
             <el-input-number v-model="value.count" clearable :min="1"/>
           </div>
           <el-tag type="success">默认值：50</el-tag>
-          <el-tag>默认单张String多张Array</el-tag>
-          <el-tag>不区分大小写</el-tag>
         </el-card>
       </el-collapse-item>
       <el-collapse-item>
@@ -67,8 +65,8 @@
             <el-switch v-model="value.edit"
                        active-color="#13ce66"
                        :active-value="true"
-                       :inactive-value="false">
-            </el-switch>
+                       :inactive-value="false"
+            />
           </div>
           <el-tag type="success">默认值：true</el-tag>
         </el-card>
@@ -110,8 +108,8 @@
             <el-switch v-model="value.disabled"
                        active-color="#13ce66"
                        :active-value="true"
-                       :inactive-value="false">
-            </el-switch>
+                       :inactive-value="false"
+            />
           </div>
           <el-tag type="success">默认值：false</el-tag>
         </el-card>
