@@ -307,7 +307,7 @@ export default {
     }
   },
   mounted () {
-    if (poweredBy === 'element') {
+    if (!this.disabled && poweredBy === 'element') {
       Sortable.create(document.querySelector('.el-upload-list'), {
         animation: 500,
         onEnd: ({ newIndex, oldIndex }) => {

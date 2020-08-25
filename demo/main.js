@@ -8,7 +8,7 @@ Vue.use(ElementUI)
 /**
  * 全局参数会被组件props中的同名参数（如果有）的值覆盖
  */
-import Imgpond from '../src/main.js' //dev
+import Imgpond from '../src/main.js'
 //import request from '@/utils/request'
 Vue.use(Imgpond, {
   //上传接口地址
@@ -38,7 +38,7 @@ Vue.use(Imgpond, {
   //压缩提示内容
   sizeExceededWarningHTML: ``,
   //基于filepond或element 默认filepond 如果你的图片服务器不支持跨域 则仅能使用element
-  //poweredBy: 'element',
+  poweredBy: 'element',
 })
 
 Vue.config.productionTip = false
