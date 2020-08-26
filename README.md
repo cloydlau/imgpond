@@ -3,14 +3,15 @@
 
 ![图片](./preview-filepond.png)
 
-<hr/>
+<br/>
 
 ![图片](./preview-element.png)
 
-<hr/>
+<br/>
 
 ![图片](./preview-crop.png)
 
+<br/><br/><br/>
 
 ### Features
 
@@ -23,6 +24,8 @@
 - √ 支持上传后预览/禁用时预览
 - √ 全局安装 通用参数支持全局配置
 
+<br/><br/><br/>
+
 ### Installation
 ![NPM](https://nodei.co/npm/imgpond.png)
 ``` bash
@@ -31,13 +34,12 @@ $ yarn add imgpond
 
 **Dependencies**：vue element-ui pic-viewer plain-kit
 
-<hr/>
-
-**Globally:**
 ```js
 import Imgpond from 'imgpond'
 Vue.use(Imgpond, { url: '接口地址' })
 ```
+
+<br/><br/><br/>
 
 ### Quick Start
 
@@ -61,10 +63,14 @@ Vue.use(Imgpond, { url: '接口地址' })
 | poweredBy | 底层库（如果存在跨域困扰 建议使用'element'） | 全局 | String | 'filepond', 'element' | 'filepond' |
 | paramKeyOfFile | 二进制文件的参数名 | 全局 | String | | 'file' |
 | responseKey | 返回值（json）中文件链接所在的key路径 | 全局 | String | | 'data' |
+| localProxy | 本地代理（针对filepond） | 全局 | Object | | |
+| proxy | 代理（针对filepond） | 全局 | Object | | |
 
-paramKeyOfFile
+<br/><br/>
 
-> 比如你的上传接口参数长这样子，其中origin是全局参数
+\# paramKeyOfFile
+
+比如你的上传接口参数长这样子，其中origin是全局参数：
 
 ```json
 {
@@ -89,9 +95,11 @@ Vue.use(Imgpond, {
 <Imgpond :param="{path:'img'}"/>
 ```
 
-responseKey
+<br/><br/>
 
-> 比如你的返回值格式长这样子：
+\# responseKey
+
+比如你的返回值格式长这样子：
 
 ```json
 {
@@ -102,6 +110,47 @@ responseKey
 ```
 
 那么你的responseKey就应该配置为 'data.url'
+
+<br/><br/>
+
+\# proxy / localProxy:
+
+如果poweredBy配置为filepond 由于filepond的图片预览是用的canvas而非img元素 所以会存在跨域问题
+
+1. 配置Imgpond 将跨域请求转为同域请求 并附上路径标识
+
+  - 一种场景是项目本地调试时 由于localhost和图片链接域名不同导致跨域 需要配置代理 但上线后不再需要 此时使用localProxy
+  
+    > 仅 localhost / 127.0.0.1 生效
+
+  - 另一种场景是图片链接域名属于第三方 无论是本地还是线上环境 都需要代理 此时使用proxy
+
+```js
+Vue.use(Imgpond, {
+    proxy: {
+      '/amap-img': 'store.is.autonavi.com'
+    }
+})
+```
+
+2. 在vue.config.js中配置代理 将标识过的请求转发到真实的地址
+
+```js
+module.exports = {
+  devServer: {
+    proxy: {
+      '/amap-img': {
+        target: `http://store.is.autonavi.com`,
+        pathRewrite: {
+          ['^/amap-img']: ''
+        }
+      }
+    },
+  },
+}
+```
+
+<br/><br/><br/>
 
 ### Notice
 - 曾支持canvas图片压缩 但效果不理想 尤其对png不友好 图片压缩还是建议后端来做

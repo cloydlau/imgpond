@@ -280,6 +280,7 @@ export default {
         }
       },
       files: [],
+      sortablejs: null
     }
   },
   watch: {
@@ -306,17 +307,12 @@ export default {
           this.files = []
         }
       }
-    }
-  },
-  mounted () {
-    if (!this.disabled && poweredBy === 'element') {
-      Sortable.create(document.querySelector('.el-upload-list'), {
-        animation: 500,
-        onEnd: ({ newIndex, oldIndex }) => {
-          this.files.splice(newIndex, 0, this.files.splice(oldIndex, 1)[0])
-          this.emitChange(this.files)
-        }
-      })
+    },
+    disabled: {
+      immediate: true,
+      handler () {
+        this.sort()
+      }
     }
   },
   methods: {

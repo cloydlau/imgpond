@@ -1,15 +1,30 @@
 import {
   api,
   paramKeyOfFile,
+  poweredBy,
   responseKey
 } from './config'
 import { file2Base64, getObjValue } from './utils'
+import Sortable from 'sortablejs'
 
 //submit()会触发http-request
 //如果是多选 submit()会连续多次触发http-request
 
 export default {
   methods: {
+    sort () {
+      if (!this.disabled && !this.sortablejs && poweredBy === 'element') {
+        this.$nextTick(() => {
+          this.sortablejs = Sortable.create(document.querySelector('.el-upload-list'), {
+            animation: 500,
+            onEnd: ({ newIndex, oldIndex }) => {
+              this.files.splice(newIndex, 0, this.files.splice(oldIndex, 1)[0])
+              this.emitChange(this.files)
+            }
+          })
+        })
+      }
+    },
     element_onChange (file, fileList) {
       if (file.status === 'ready') {
         this.beforeAddFile({
