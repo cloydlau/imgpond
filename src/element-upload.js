@@ -1,5 +1,9 @@
-import { api } from './config'
-import { file2Base64 } from './utils'
+import {
+  api,
+  paramKeyOfFile,
+  responseKey
+} from './config'
+import { file2Base64, getObjValue } from './utils'
 
 //submit()会触发http-request
 //如果是多选 submit()会连续多次触发http-request
@@ -40,10 +44,15 @@ export default {
       this.loaded()
     },
     element_httpRequest (item) {
-      const promise = api({ ...this.param, file: item.file })
+      const promise = api({
+        ...this.param,
+        [paramKeyOfFile]: item.file
+      })
       if (promise) {
         promise.then(res => {
-          const source = res && typeof res === 'string' ? res : res.data
+          const source = res && typeof res === 'string' ?
+            res :
+            getObjValue(res, responseKey)
           if (source) {
             //item.onSuccess(source, item.file)
             this.element_onSuccess(source, item.file)

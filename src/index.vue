@@ -95,10 +95,12 @@ import {
   globalMaxSize,
   fixedRatioDeviation,
   poweredBy,
+  paramKeyOfFile,
+  responseKey
 } from './config'
 import { PicViewer } from 'pic-viewer'
 import { isEmpty, warn, confirmation } from 'plain-kit'
-import { isArrayJSON, getOrigin } from './utils'
+import { isArrayJSON, getOrigin, getObjValue } from './utils'
 import ElementUpload from './element-upload'
 
 import vueFilePond from 'vue-filepond'
@@ -461,10 +463,15 @@ export default {
       //}
 
       function fn (file) {
-        const promise = api({ ...this.param, file })
+        const promise = api({
+          ...this.param,
+          [paramKeyOfFile]: file
+        })
         if (promise) {
           promise.then(res => {
-            const source = res && typeof res === 'string' ? res : res.data
+            const source = res && typeof res === 'string' ?
+              res :
+              getObjValue(res, responseKey)
             if (source) {
               this.$refs.filePond.addFile(source, { type: 'local' }).finally(file => {
                 this.loaded()

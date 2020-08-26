@@ -1,7 +1,7 @@
 import { isEmpty } from 'plain-kit'
 
 let request, url, globalParam, globalCount, globalEdit, globalMaxSize, localProxy, proxy, sizeExceededWarningHTML,
-  fixedRatioDeviation, poweredBy
+  fixedRatioDeviation, poweredBy, paramKeyOfFile, responseKey
 
 export const init = (opts = {}) => {
   request = opts.request || null
@@ -15,6 +15,8 @@ export const init = (opts = {}) => {
   proxy = opts.proxy || {}
   sizeExceededWarningHTML = opts.sizeExceededWarningHTML || ''
   poweredBy = opts.poweredBy || 'filepond'
+  paramKeyOfFile = opts.paramKeyOfFile || 'file'
+  responseKey = opts.responseKey || 'data'
 }
 
 export function api (param) {
@@ -61,5 +63,7 @@ export {
   globalEdit,
   globalMaxSize,
   fixedRatioDeviation,
-  poweredBy
+  poweredBy,
+  paramKeyOfFile,
+  responseKey
 }

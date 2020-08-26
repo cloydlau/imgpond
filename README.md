@@ -58,8 +58,50 @@ Vue.use(Imgpond, { url: '接口地址' })
 | param | 上传接口参数补充 | 全局，props | Object | | { file: '二进制文件' } |
 | edit | 是否开启裁剪功能 | 全局，props | Boolean | | true |
 | disabled | 是否禁用 | props | Boolean | | false |
-| poweredBy | 底层库 | 全局 | String | 'filepond', 'element' | 'filepond' |
+| poweredBy | 底层库（如果存在跨域困扰 建议使用'element'） | 全局 | String | 'filepond', 'element' | 'filepond' |
+| paramKeyOfFile | 二进制文件的参数名 | 全局 | String | | 'file' |
+| responseKey | 返回值（json）中文件链接所在的key路径 | 全局 | String | | 'data' |
 
+paramKeyOfFile
+
+> 比如你的上传接口参数长这样子，其中origin是全局参数
+
+```json
+{
+  "img": "(binary)",
+  "origin": true,
+  "path": "img"
+}
+```
+
+你可以这样配置：
+
+```js
+Vue.use(Imgpond, {
+  paramKeyOfFile: 'img',
+  param: {
+    origin: true
+  }
+})
+```
+
+```html
+<Imgpond :param="{path:'img'}"/>
+```
+
+responseKey
+
+> 比如你的返回值格式长这样子：
+
+```json
+{
+  "data": {
+    "url": "图片链接"
+  }
+}
+```
+
+那么你的responseKey就应该配置为 'data.url'
 
 ### Notice
 - 曾支持canvas图片压缩 但效果不理想 尤其对png不友好 图片压缩还是建议后端来做
