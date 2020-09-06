@@ -1,8 +1,7 @@
 import {
   api,
-  paramKeyOfFile,
   poweredBy,
-  responseKey
+  key
 } from './config'
 import { file2Base64, getObjValue } from './utils'
 import Sortable from 'sortablejs'
@@ -61,13 +60,13 @@ export default {
     element_httpRequest (item) {
       const promise = api({
         ...this.param,
-        [paramKeyOfFile]: item.file
+        [key.param]: item.file
       })
       if (promise) {
         promise.then(res => {
           const source = res && typeof res === 'string' ?
             res :
-            getObjValue(res, responseKey)
+            getObjValue(res, key.response)
           if (source) {
             //item.onSuccess(source, item.file)
             this.element_onSuccess(source, item.file)

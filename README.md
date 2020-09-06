@@ -61,14 +61,21 @@ Vue.use(Imgpond, { url: '接口地址' })
 | edit | 是否开启裁剪功能 | 全局，props | Boolean | | true |
 | disabled | 是否禁用 | props | Boolean | | false |
 | poweredBy | 底层库（如果存在跨域困扰 建议使用'element'） | 全局 | String | 'filepond', 'element' | 'filepond' |
-| paramKeyOfFile | 二进制文件的参数名 | 全局 | String | | 'file' |
-| responseKey | 返回值（json）中文件链接所在的key路径 | 全局 | String | | 'data' |
+| key | 接口参数/返回值格式配置 | 全局 | Object | | *详见下方说明 |
 | localProxy | 本地代理（针对filepond） | 全局 | Object | | |
 | proxy | 代理（针对filepond） | 全局 | Object | | |
 
 <br/><br/>
 
-\# paramKeyOfFile
+key
+
+默认值：
+```json
+{
+  "param": "file", //二进制文件的参数名
+  "response": "data" //返回值（json）中文件链接所在的key路径
+}
+```
 
 比如你的上传接口参数长这样子，其中origin是全局参数：
 
@@ -84,7 +91,9 @@ Vue.use(Imgpond, { url: '接口地址' })
 
 ```js
 Vue.use(Imgpond, {
-  paramKeyOfFile: 'img',
+  key: {
+    param: 'img'
+  },
   param: {
     origin: true
   }
@@ -95,11 +104,7 @@ Vue.use(Imgpond, {
 <Imgpond :param="{path:'img'}"/>
 ```
 
-<br/><br/>
-
-\# responseKey
-
-比如你的返回值格式长这样子：
+如果你的上传接口返回值格式为：
 
 ```json
 {
@@ -109,11 +114,19 @@ Vue.use(Imgpond, {
 }
 ```
 
-那么你的responseKey就应该配置为 'data.url'
+配置如下：
+
+```js
+Vue.use(Imgpond, {
+  key: {
+    response: 'data.url'
+  },
+})
+```
 
 <br/><br/>
 
-\# proxy / localProxy:
+proxy / localProxy:
 
 如果poweredBy配置为filepond 由于filepond的图片预览是用的canvas而非img元素 所以会存在跨域问题
 

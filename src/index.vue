@@ -82,7 +82,6 @@
 </template>
 
 <script>
-import Sortable from 'sortablejs'
 import Cropper from './components/vue-cropperjs'
 import {
   api,
@@ -95,8 +94,7 @@ import {
   globalMaxSize,
   fixedRatioDeviation,
   poweredBy,
-  paramKeyOfFile,
-  responseKey
+  key
 } from './config'
 import { PicViewer } from 'pic-viewer'
 import { isEmpty, warn, confirmation } from 'plain-kit'
@@ -461,13 +459,13 @@ export default {
       function fn (file) {
         const promise = api({
           ...this.param,
-          [paramKeyOfFile]: file
+          [key.param]: file
         })
         if (promise) {
           promise.then(res => {
             const source = res && typeof res === 'string' ?
               res :
-              getObjValue(res, responseKey)
+              getObjValue(res, key.response)
             if (source) {
               this.$refs.filePond.addFile(source, { type: 'local' }).finally(file => {
                 this.loaded()
