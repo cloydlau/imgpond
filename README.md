@@ -11,7 +11,7 @@
 
 ![图片](./preview-crop.png)
 
-<br/><br/><br/>
+<br/><br/>
 
 ### Features
 
@@ -24,7 +24,7 @@
 - √ 支持上传后预览/禁用时预览
 - √ 全局安装 通用参数支持全局配置
 
-<br/><br/><br/>
+<br/><br/>
 
 ### Installation
 ![NPM](https://nodei.co/npm/imgpond.png)
@@ -39,7 +39,7 @@ import Imgpond from 'imgpond'
 Vue.use(Imgpond, { url: '接口地址' })
 ```
 
-<br/><br/><br/>
+<br/><br/><
 
 ### Quick Start
 
@@ -150,7 +150,7 @@ module.exports = {
 }
 ```
 
-<br/><br/><br/>
+<br/><br/>
 
 ### Notice
 - 曾支持canvas图片压缩 但效果不理想 尤其对png不友好 图片压缩还是建议后端来做
