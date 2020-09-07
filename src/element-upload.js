@@ -5,6 +5,7 @@ import {
 } from './config'
 import { file2Base64, evalObj } from './utils'
 import Sortable from 'sortablejs'
+import { err } from 'plain-kit'
 
 //submit()会触发http-request
 //如果是多选 submit()会连续多次触发http-request
@@ -54,7 +55,7 @@ export default {
       this.loaded()
     },
     element_onError (err, file, fileList) {
-      this.$err(err)
+      err(err)
       this.loaded()
     },
     element_httpRequest (item) {
@@ -67,9 +68,13 @@ export default {
           const source = res && typeof res === 'string' ?
             res :
             evalObj(res, key.response)
-          if (source) {
+          if (typeof source === 'string') {
             //item.onSuccess(source, item.file)
             this.element_onSuccess(source, item.file)
+          } else {
+            console.error('如果接口正常返回，请根据下方request返回值配置正确的key.response：')
+            console.log(res)
+            this.element_onError('获取文件url失败')
           }
         }).catch(e => {
           item.onError(e)

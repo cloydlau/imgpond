@@ -54,6 +54,7 @@ Vue.use(Imgpond, { url: '接口地址' })
 | fixedRatioDeviation | 固定裁剪比例误差范围（默认在＜±10%时不裁剪直接上传） | 全局 | Number | | 0.1 |
 | valueType | 数据类型 | props | String | 'String' / 'Array'（不区分大小写） | undefined（自动，单张String多张Array） |
 | request | axios实例 | 全局 | Axios | | |
+| requestConfig | axios配置 | 全局 | Object | | *详见下方说明 |
 | url | 上传接口地址 | 全局 | String | | |
 | maxSize | 图片大小限制（单位MB） | 全局，props | Number | | 10 |
 | count | 数量上限 | 全局，props | Number | | 50 |
@@ -64,6 +65,29 @@ Vue.use(Imgpond, { url: '接口地址' })
 | key | 接口参数/返回值格式配置 | 全局 | Object | | *详见下方说明 |
 | localProxy | 本地代理（针对filepond） | 全局 | Object | | |
 | proxy | 代理（针对filepond） | 全局 | Object | | |
+
+<br/><br/>
+
+requestConfig
+
+默认值：
+```json
+{
+  "baseURL": "", //针对prod环境中baseApi为相对路径的情况
+  "method": "POST",
+  "timeout": 20000
+}
+```
+
+比如你想将超时时间修改为10秒：
+
+```js
+Vue.use(Imgpond, {
+  requestConfig: {
+    timeout: 10000
+  }
+})
+```
 
 <br/><br/>
 
