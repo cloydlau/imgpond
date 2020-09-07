@@ -39,7 +39,7 @@ import Imgpond from 'imgpond'
 Vue.use(Imgpond, { url: '接口地址' })
 ```
 
-<br/><br/><
+<br/><br/>
 
 ### Quick Start
 
