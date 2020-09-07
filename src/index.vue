@@ -98,7 +98,7 @@ import {
 } from './config'
 import { PicViewer } from 'pic-viewer'
 import { isEmpty, warn, confirmation } from 'plain-kit'
-import { isArrayJSON, getOrigin, getObjValue } from './utils'
+import { isArrayJSON, getOrigin, evalObj } from './utils'
 import ElementUpload from './element-upload'
 
 import vueFilePond from 'vue-filepond'
@@ -465,7 +465,7 @@ export default {
           promise.then(res => {
             const source = res && typeof res === 'string' ?
               res :
-              getObjValue(res, key.response)
+              evalObj(res, key.response)
             if (source) {
               this.$refs.filePond.addFile(source, { type: 'local' }).finally(file => {
                 this.loaded()

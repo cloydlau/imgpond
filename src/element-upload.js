@@ -3,7 +3,7 @@ import {
   poweredBy,
   key
 } from './config'
-import { file2Base64, getObjValue } from './utils'
+import { file2Base64, evalObj } from './utils'
 import Sortable from 'sortablejs'
 
 //submit()会触发http-request
@@ -66,7 +66,7 @@ export default {
         promise.then(res => {
           const source = res && typeof res === 'string' ?
             res :
-            getObjValue(res, key.response)
+            evalObj(res, key.response)
           if (source) {
             //item.onSuccess(source, item.file)
             this.element_onSuccess(source, item.file)
