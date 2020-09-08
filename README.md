@@ -190,6 +190,7 @@ module.exports = {
 <br/><br/>
 
 ### Notice
+- 不配置上传接口也可以使用 只是得到的不是图片链接而是base64
 - 曾支持canvas图片压缩 但效果不理想 尤其对png不友好 图片压缩还是建议后端来做
 - 图片格式目前写死支持jpg/jpeg/png 暂不提供配置
 - poweredBy参数配置为filepond时 图片链接服务最好能够提供nginx跨域支持（推荐）
