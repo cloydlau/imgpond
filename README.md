@@ -5,10 +5,6 @@
 
 <br/>
 
-![图片](./preview-element.png)
-
-<br/>
-
 ![图片](./preview-crop.png)
 
 <br/><br/>
