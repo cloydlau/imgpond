@@ -58,7 +58,7 @@ Vue.use(Imgpond, { url: '接口地址' })
 | edit | 是否开启裁剪功能 | 全局，props | Boolean | | true |
 | disabled | 是否禁用 | props | Boolean | | false |
 | poweredBy | 底层库（如果存在跨域困扰 建议使用'element'） | 全局 | String | 'filepond', 'element' | 'filepond' |
-| key | 接口参数/返回值格式配置 | 全局 | Object | | *详见下方说明 |
+| normalizer | 接口参数/返回值格式配置 | 全局 | Object | | *详见下方说明 |
 | localProxy | 本地代理（针对filepond） | 全局 | Object | | |
 | proxy | 代理（针对filepond） | 全局 | Object | | |
 
@@ -87,7 +87,7 @@ Vue.use(Imgpond, {
 
 <br/><br/>
 
-key
+normalizer
 
 默认值：
 ```json
@@ -111,7 +111,7 @@ key
 
 ```js
 Vue.use(Imgpond, {
-  key: {
+  normalizer: {
     param: 'img'
   },
   param: {
@@ -138,7 +138,7 @@ Vue.use(Imgpond, {
 
 ```js
 Vue.use(Imgpond, {
-  key: {
+  normalizer: {
     response: 'data.url'
   },
 })

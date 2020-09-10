@@ -1,7 +1,7 @@
 import {
   api,
   poweredBy,
-  key
+  normalizer
 } from './config'
 import { file2Base64, evalObj } from './utils'
 import Sortable from 'sortablejs'
@@ -61,18 +61,18 @@ export default {
     element_httpRequest (item) {
       const promise = api({
         ...this.param,
-        [key.param]: item.file
+        [normalizer.param]: item.file
       })
       if (promise) {
         promise.then(res => {
           const source = res && typeof res === 'string' ?
             res :
-            evalObj(res, key.response)
+            evalObj(res, normalizer.response)
           if (typeof source === 'string') {
             //item.onSuccess(source, item.file)
             this.element_onSuccess(source, item.file)
           } else {
-            console.error('如果接口正常返回，请根据下方request返回值配置正确的key.response：')
+            console.error('如果接口正常返回，请根据下方request返回值配置正确的normalizer.response：')
             console.log(res)
             this.element_onError('获取文件url失败')
           }
