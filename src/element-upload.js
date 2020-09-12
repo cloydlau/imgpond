@@ -1,10 +1,11 @@
 import {
   api,
   poweredBy,
-  key
+  normalizer
 } from './config'
-import { file2Base64, getObjValue } from './utils'
+import { file2Base64, evalObj } from './utils'
 import Sortable from 'sortablejs'
+import { err } from 'plain-kit'
 
 //submit()会触发http-request
 //如果是多选 submit()会连续多次触发http-request
@@ -54,22 +55,26 @@ export default {
       this.loaded()
     },
     element_onError (err, file, fileList) {
-      this.$err(err)
+      err(err)
       this.loaded()
     },
     element_httpRequest (item) {
       const promise = api({
         ...this.param,
-        [key.param]: item.file
+        [normalizer.param]: item.file
       })
       if (promise) {
         promise.then(res => {
           const source = res && typeof res === 'string' ?
             res :
-            getObjValue(res, key.response)
-          if (source) {
+            evalObj(res, normalizer.response)
+          if (typeof source === 'string') {
             //item.onSuccess(source, item.file)
             this.element_onSuccess(source, item.file)
+          } else {
+            console.error('如果接口正常返回，请根据下方request返回值配置正确的normalizer.response：')
+            console.log(res)
+            this.element_onError('获取文件url失败')
           }
         }).catch(e => {
           item.onError(e)

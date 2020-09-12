@@ -94,11 +94,11 @@ import {
   globalMaxSize,
   fixedRatioDeviation,
   poweredBy,
-  key
+  normalizer
 } from './config'
 import { PicViewer } from 'pic-viewer'
-import { isEmpty, warn, confirmation } from 'plain-kit'
-import { isArrayJSON, getOrigin, getObjValue } from './utils'
+import { isEmpty, warn, confirmation, err } from 'plain-kit'
+import { isArrayJSON, getOrigin, evalObj } from './utils'
 import ElementUpload from './element-upload'
 
 import vueFilePond from 'vue-filepond'
@@ -459,17 +459,22 @@ export default {
       function fn (file) {
         const promise = api({
           ...this.param,
-          [key.param]: file
+          [normalizer.param]: file
         })
         if (promise) {
           promise.then(res => {
             const source = res && typeof res === 'string' ?
               res :
-              getObjValue(res, key.response)
-            if (source) {
+              evalObj(res, normalizer.response)
+            if (typeof source === 'string') {
               this.$refs.filePond.addFile(source, { type: 'local' }).finally(file => {
                 this.loaded()
               })
+            } else {
+              console.error('如果接口正常返回，请根据下方request返回值配置正确的normalizer.response：')
+              console.log(res)
+              err('获取文件url失败')
+              this.loaded()
             }
           }).catch(e => {
             this.loaded()

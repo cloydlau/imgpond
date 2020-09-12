@@ -51,7 +51,7 @@ function parsePath (path) {
   }
 }
 
-export function getObjValue (obj, exp) {
+export function evalObj (obj, exp) {
   let getter = parsePath(exp)
 
   if (getter) {

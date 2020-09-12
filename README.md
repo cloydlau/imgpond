@@ -5,13 +5,9 @@
 
 <br/>
 
-![图片](./preview-element.png)
-
-<br/>
-
 ![图片](./preview-crop.png)
 
-<br/><br/><br/>
+<br/><br/>
 
 ### Features
 
@@ -24,7 +20,7 @@
 - √ 支持上传后预览/禁用时预览
 - √ 全局安装 通用参数支持全局配置
 
-<br/><br/><br/>
+<br/><br/>
 
 ### Installation
 ![NPM](https://nodei.co/npm/imgpond.png)
@@ -39,7 +35,7 @@ import Imgpond from 'imgpond'
 Vue.use(Imgpond, { url: '接口地址' })
 ```
 
-<br/><br/><br/>
+<br/><br/>
 
 ### Quick Start
 
@@ -54,6 +50,7 @@ Vue.use(Imgpond, { url: '接口地址' })
 | fixedRatioDeviation | 固定裁剪比例误差范围（默认在＜±10%时不裁剪直接上传） | 全局 | Number | | 0.1 |
 | valueType | 数据类型 | props | String | 'String' / 'Array'（不区分大小写） | undefined（自动，单张String多张Array） |
 | request | axios实例 | 全局 | Axios | | |
+| requestConfig | axios配置 | 全局 | Object | | *详见下方说明 |
 | url | 上传接口地址 | 全局 | String | | |
 | maxSize | 图片大小限制（单位MB） | 全局，props | Number | | 10 |
 | count | 数量上限 | 全局，props | Number | | 50 |
@@ -61,13 +58,36 @@ Vue.use(Imgpond, { url: '接口地址' })
 | edit | 是否开启裁剪功能 | 全局，props | Boolean | | true |
 | disabled | 是否禁用 | props | Boolean | | false |
 | poweredBy | 底层库（如果存在跨域困扰 建议使用'element'） | 全局 | String | 'filepond', 'element' | 'filepond' |
-| key | 接口参数/返回值格式配置 | 全局 | Object | | *详见下方说明 |
+| normalizer | 接口参数/返回值格式配置 | 全局 | Object | | *详见下方说明 |
 | localProxy | 本地代理（针对filepond） | 全局 | Object | | |
 | proxy | 代理（针对filepond） | 全局 | Object | | |
 
 <br/><br/>
 
-key
+requestConfig
+
+默认值：
+```json
+{
+  "baseURL": "", //针对prod环境中baseApi为相对路径的情况
+  "method": "POST",
+  "timeout": 20000
+}
+```
+
+比如你想将超时时间修改为10秒：
+
+```js
+Vue.use(Imgpond, {
+  requestConfig: {
+    timeout: 10000
+  }
+})
+```
+
+<br/><br/>
+
+normalizer
 
 默认值：
 ```json
@@ -91,7 +111,7 @@ key
 
 ```js
 Vue.use(Imgpond, {
-  key: {
+  normalizer: {
     param: 'img'
   },
   param: {
@@ -118,7 +138,7 @@ Vue.use(Imgpond, {
 
 ```js
 Vue.use(Imgpond, {
-  key: {
+  normalizer: {
     response: 'data.url'
   },
 })
@@ -163,9 +183,10 @@ module.exports = {
 }
 ```
 
-<br/><br/><br/>
+<br/><br/>
 
 ### Notice
+- 不配置上传接口也可以使用 只是得到的不是图片链接而是base64
 - 曾支持canvas图片压缩 但效果不理想 尤其对png不友好 图片压缩还是建议后端来做
 - 图片格式目前写死支持jpg/jpeg/png 暂不提供配置
 - poweredBy参数配置为filepond时 图片链接服务最好能够提供nginx跨域支持（推荐）
