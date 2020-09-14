@@ -116,7 +116,7 @@ export default {
       }
 
       this.$refs.cropper.getCroppedCanvas().toBlob(blob => {
-        console.log('【裁剪后】', blob)
+        console.log('[Imgpond] 裁剪后：', blob)
         this.$emit('stopCrop', blob)
       }, this.file.type) //第三个参数为质量 默认＜1
     },
