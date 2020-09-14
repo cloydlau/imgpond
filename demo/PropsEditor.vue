@@ -27,18 +27,18 @@
       <el-form-item label="fixedRatio">
         <el-radio v-model="fixedRatioType__" label="String">String</el-radio>
         <el-radio v-model="fixedRatioType__" label="Array">Array</el-radio>
-        <el-input v-if="fixedRatioType__==='String'" v-model="value.fixedRatio" clearable style="width:300px"/>
+        <el-input v-if="fixedRatioType__==='String'" v-model="value.fixedRatio" clearable
+                  style="display:inline-block"/>
         <template v-else-if="value.fixedRatio">
           <el-input placeholder="下限"
                     v-model="value.fixedRatio[0]"
                     clearable
-                    style="width:300px;margin-right: 1rem"
+                    style="display:inline-block; margin-right:1rem"
           />
           <el-input placeholder="上限"
                     v-model="value.fixedRatio[1]"
                     clearable
-                    style="width:300px"
-          />
+                    style="display:inline-block"/>
         </template>
       </el-form-item>
       <el-form-item label="disabled">
