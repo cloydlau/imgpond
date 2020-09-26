@@ -41,14 +41,14 @@ export function api (param) {
     method: 'POST',
     data: formData,
     timeout: 20000,
-    ...typeof requestConfig === 'function' ? requestConfig(formData) : requestConfig
+    ...typeof requestConfig === 'function' ? requestConfig(data) : requestConfig
   }) : fetch(url, {
     method: 'POST',
     mode: 'cors',
     credentials: 'include',
     headers: {},
     body: formData,
-    ...typeof requestConfig === 'function' ? requestConfig(formData) : requestConfig
+    ...typeof requestConfig === 'function' ? requestConfig(data) : requestConfig
   }).then(res => {
     if (res.ok) {
       return res.json()
