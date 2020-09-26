@@ -395,7 +395,7 @@ export default {
           return false
         }
         //this.compression.on = this.compress && item.file.size >= .2 * MB
-        console.log('【裁剪前】', item.file)
+        console.log('[Imgpond] 裁剪前：', item.file)
         if (this.Edit) {
           if (this.fixedRatio) {
             this.need2Crop = await this.handleAspectRatio(item.file)
