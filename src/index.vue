@@ -1,19 +1,19 @@
 <template>
   <div>
-    <PicViewer v-show="disabled"
+    <PicViewer v-show="Disabled"
                :value="files"
                ref="PicViewer"
                objectKey="source"
     />
 
-    <div v-if="!disabled" :class="{'full': isFull}">
+    <div v-if="!Disabled" :class="{'full': isFull}">
       <el-upload v-if="poweredBy==='element'"
                  ref="element-upload"
                  action="#"
                  :auto-upload="false"
                  list-type="picture-card"
                  :file-list="files"
-                 :disabled="disabled"
+                 :disabled="Disabled"
                  :limit="Count"
                  :multiple="Count!==1"
                  :accept="formatList"
@@ -44,7 +44,7 @@
                  :max-files="Count||null"
                  @init="handleFilePondInit"
                  :beforeAddFile="beforeAddFile"
-                 :disabled="disabled"
+                 :disabled="Disabled"
                  @onaddfilestart="onAddFileStart"
                  styleItemPanelAspectRatio="1"
                  @updatefiles="onUpdateFiles"
@@ -123,6 +123,11 @@ const MB = Math.pow(1024, 2)
 export default {
   name: 'Imgpond',
   mixins: [ElementUpload],
+  inject: {
+    elForm: {
+      default: ''
+    },
+  },
   components: { FilePond, Cropper, PicViewer },
   props: {
     fixedRatio: [Array, String],
@@ -173,6 +178,9 @@ export default {
     event: 'change'
   },
   computed: {
+    Disabled () {
+      return this.disabled || (this.elForm || {}).disabled
+    },
     isFull () {
       return this.files.length >= this.Count
     },
@@ -306,7 +314,7 @@ export default {
         }
       }
     },
-    disabled: {
+    Disabled: {
       immediate: true,
       handler () {
         this.sort()
