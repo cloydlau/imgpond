@@ -18,8 +18,8 @@
 - √ 支持拖拉拽改变排序（响应式）
 - √ 灵活的数据类型：支持String/Array
 - √ 支持上传后预览/禁用时预览
+- √ 支持element-ui中el-form的全局disabled
 - √ 全局安装 通用参数支持全局配置
-- √ 支持el-form的全局disabled
 
 <br/><br/>
 
