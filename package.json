@@ -29,7 +29,7 @@
     "filepond": "4.17.1",
     "filepond-plugin-file-validate-type": "~1.2.5",
     "filepond-plugin-image-preview": "~4.6.4",
-    "plain-kit": "^0.3.0-beta.0",
+    "plain-kit": "^0.3.0-rc.12",
     "sortablejs": "^1.10.2",
     "vue-cropperjs": "~4.1.0",
     "vue-filepond": "~6.0.2"

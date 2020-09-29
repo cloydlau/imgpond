@@ -3,9 +3,9 @@ import {
   poweredBy,
   normalizer
 } from './config'
-import { file2Base64, evalObj } from './utils'
+import { file2Base64 } from './utils'
 import Sortable from 'sortablejs'
-import { err } from 'plain-kit'
+import { deeplyAccessProp } from 'plain-kit'
 
 //submit()会触发http-request
 //如果是多选 submit()会连续多次触发http-request
@@ -67,7 +67,7 @@ export default {
         promise.then(res => {
           const source = res && typeof res === 'string' ?
             res :
-            evalObj(res, normalizer.response)
+            deeplyAccessProp(res, normalizer.response)
           if (typeof source === 'string') {
             //item.onSuccess(source, item.file)
             this.element_onSuccess(source, item.file)

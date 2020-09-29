@@ -97,8 +97,8 @@ import {
   normalizer
 } from './config'
 import { PicViewer } from 'pic-viewer'
-import { isEmpty, warn, confirmation, err } from 'plain-kit'
-import { isArrayJSON, getOrigin, evalObj } from './utils'
+import { isEmpty, warn, confirmation, err, deeplyAccessProp } from 'plain-kit'
+import { isArrayJSON, getOrigin } from './utils'
 import ElementUpload from './element-upload'
 
 import vueFilePond from 'vue-filepond'
@@ -473,7 +473,7 @@ export default {
           promise.then(res => {
             const source = res && typeof res === 'string' ?
               res :
-              evalObj(res, normalizer.response)
+              deeplyAccessProp(res, normalizer.response)
             if (typeof source === 'string') {
               this.$refs.filePond.addFile(source, { type: 'local' }).finally(file => {
                 this.loaded()
