@@ -4,13 +4,13 @@ let request, url, globalParam, globalCount, globalEdit, globalMaxSize, localProx
   fixedRatioDeviation, poweredBy, normalizer, requestConfig
 
 export const init = (opts = {}) => {
-  request = opts.request || null
+  request = opts.request
   requestConfig = opts.requestConfig
-  url = opts.url || ''
+  url = opts.url
   globalParam = opts.param || {}
-  globalCount = opts.count || 50
-  globalEdit = typeof opts.edit === 'boolean' ? opts.edit : true
-  globalMaxSize = opts.maxSize || 10
+  globalCount = opts.count
+  globalEdit = opts.edit
+  globalMaxSize = opts.maxSize
   fixedRatioDeviation = isEmpty(opts.fixedRatioDeviation) ? .1 : opts.fixedRatioDeviation
   localProxy = opts.localProxy || {}
   proxy = opts.proxy || {}
@@ -24,7 +24,7 @@ export const init = (opts = {}) => {
 }
 
 export function api (param) {
-  //参数
+  // 参数
   const data = {
     ...globalParam,
     ...param
@@ -36,7 +36,7 @@ export function api (param) {
   }
 
   return url && (typeof request === 'function' ? request({
-    baseURL: '', //针对prod环境中baseApi为相对路径的情况
+    baseURL: '', // 针对prod环境中baseApi为相对路径的情况
     url,
     method: 'POST',
     data: formData,

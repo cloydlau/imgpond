@@ -97,8 +97,7 @@ import {
   normalizer
 } from './config'
 import { PicViewer } from 'pic-viewer'
-import { isEmpty, warn, confirmation, err, deeplyAccessProp } from 'plain-kit'
-import { isArrayJSON, getOrigin } from './utils'
+import { isArrayJSON, getOrigin, getFinalProp } from './utils'
 import ElementUpload from './element-upload'
 
 import vueFilePond from 'vue-filepond'
@@ -111,6 +110,9 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 //import FilePondPluginImageOverlay from 'filepond-plugin-image-overlay'
 
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+
+import { isEmpty, getPropByPath, SweetAlert, typeOf } from 'plain-kit'
+const { warn, confirmation, err } = SweetAlert
 
 const FilePond = vueFilePond(
   //FilePondPluginImageOverlay,
@@ -149,7 +151,7 @@ export default {
       default: true
     },
     value: {
-      validator: value => ['String', 'Null', 'Array'].includes(({}).toString.call(value).slice(8, -1)),
+      validator: value => ['string', 'null', 'array'].includes(typeOf(value)),
     },
     valueType: String,
     compress: {
@@ -196,13 +198,13 @@ export default {
       return this.valueType?.toLowerCase()
     },
     Count () {
-      return this.count || globalCount || 50
+      return getFinalProp(globalCount, this.count, 50)
     },
     MaxSize () {
-      return this.maxSize || globalMaxSize || 10
+      return getFinalProp(globalMaxSize, this.maxSize, 10)
     },
     Edit () {
-      return !(!this.edit || typeof globalEdit === 'boolean' && !globalEdit)
+      return getFinalProp(globalEdit, this.edit, true)
     },
     formatList () {
       let str = ''
@@ -350,7 +352,12 @@ export default {
       }
     },
     onActivatefile ({ source, url }) {
-      this.$refs.PicViewer.preview(this.value.indexOf(url || source))
+      for (let [i, v] of this.files.entries()) {
+        if ([url, source].includes(v.source)) {
+          this.$refs.PicViewer.preview(i)
+          break
+        }
+      }
     },
     handleFilePondInit () {
     },
@@ -473,7 +480,7 @@ export default {
           promise.then(res => {
             const source = res && typeof res === 'string' ?
               res :
-              deeplyAccessProp(res, normalizer.response)
+              getPropByPath(res, normalizer.response)
             if (typeof source === 'string') {
               this.$refs.filePond.addFile(source, { type: 'local' }).finally(file => {
                 this.loaded()
@@ -597,6 +604,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .el-dialog {
+  min-width: 650px;
+}
+
 ::v-deep .filepond--item {
   width: calc(33.33% - .5em);
 }
@@ -610,11 +621,6 @@ export default {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, .9);
   filter: blur(1px);
   background: hsla(0, 0%, 100%, .3);
-}
-
-::v-deep .el-button-group {
-  margin-left: 16px;
-  margin-bottom: 1px;
 }
 
 ::v-deep .el-upload-list__item {
@@ -644,10 +650,8 @@ export default {
 .preview-img {
   background-color: rgba(0, 0, 0, .5); //针对png
 }
-</style>
 
-<style lang="scss">
-.filepond--fullsize-overlay {
+/*.filepond--fullsize-overlay {
   z-index: 9999;
-}
+}*/
 </style>

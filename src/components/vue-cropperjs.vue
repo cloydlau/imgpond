@@ -38,8 +38,9 @@
 <script>
 import 'cropperjs/dist/cropper.css'
 import VueCropper from 'vue-cropperjs'
-import { warn } from 'plain-kit'
 import { file2Base64 } from '../utils'
+import { SweetAlert } from 'plain-kit'
+const { warn } = SweetAlert
 
 export default {
   props: {
@@ -187,16 +188,12 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
-
-<style>
-.flipX > .el-icon-sort {
+<style lang="scss" scoped>
+::v-deep .flipX > .el-icon-sort {
   transform: rotate(90deg);
 }
 
-.cropper-point {
+::v-deep .cropper-point {
   width: 8px !important;
   height: 8px !important;
   border-radius: 50%;

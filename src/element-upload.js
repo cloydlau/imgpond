@@ -5,7 +5,7 @@ import {
 } from './config'
 import { file2Base64 } from './utils'
 import Sortable from 'sortablejs'
-import { deeplyAccessProp } from 'plain-kit'
+import { getPropByPath } from 'plain-kit'
 
 //submit()会触发http-request
 //如果是多选 submit()会连续多次触发http-request
@@ -67,7 +67,7 @@ export default {
         promise.then(res => {
           const source = res && typeof res === 'string' ?
             res :
-            deeplyAccessProp(res, normalizer.response)
+            getPropByPath(res, normalizer.response)
           if (typeof source === 'string') {
             //item.onSuccess(source, item.file)
             this.element_onSuccess(source, item.file)

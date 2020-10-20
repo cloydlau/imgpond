@@ -16,7 +16,7 @@ Vue.use(Imgpond, {
     })
   }),*/
   request: axios,
-  key: {
+  normalizer: {
     response: 'data.data.url'
   },
   param: {},
