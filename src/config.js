@@ -7,7 +7,7 @@ export const init = (opts = {}) => {
   request = opts.request
   requestConfig = opts.requestConfig
   url = opts.url
-  globalParam = opts.param || {}
+  globalParam = opts.param
   globalCount = opts.count
   globalEdit = opts.edit
   globalMaxSize = opts.maxSize
@@ -19,7 +19,7 @@ export const init = (opts = {}) => {
   normalizer = {
     response: 'data',
     param: 'file',
-    ...opts.normalizer || opts.key
+    ...opts.normalizer || opts.key // todo: deprecated
   }
 }
 

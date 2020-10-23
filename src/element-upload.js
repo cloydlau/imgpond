@@ -60,10 +60,10 @@ export default {
     },
     element_httpRequest (item) {
       const promise = api({
-        ...this.param,
+        ...this.Param,
         [normalizer.param]: item.file
       })
-      if (promise) {
+      if (promise instanceof Promise) {
         promise.then(res => {
           const source = res && typeof res === 'string' ?
             res :

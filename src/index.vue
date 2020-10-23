@@ -471,41 +471,38 @@ export default {
           },
         })
       } else {*/
-      fn.call(this, param.file)
 
       //}
 
-      function fn (file) {
-        const promise = api({
-          ...this.Param,
-          [normalizer.param]: file
-        })
-        if (promise) {
-          promise.then(res => {
-            const source = res && typeof res === 'string' ?
-              res :
-              getPropByPath(res, normalizer.response)
-            if (typeof source === 'string') {
-              this.$refs.filePond.addFile(source, { type: 'local' }).finally(file => {
-                this.loaded()
-              })
-            } else {
-              console.error('如果接口正常返回，请根据下方request返回值配置正确的normalizer.response：')
-              console.log(res)
-              err('获取文件url失败')
-              this.loaded()
-            }
-          }).catch(e => {
-            this.loaded()
-          })
-        } else {
-          let reader = new FileReader()
-          reader.readAsDataURL(file)
-          reader.onload = e => {
-            this.$refs.filePond.addFile(e.target.result, { type: 'local' }).finally(file => {
+      const promise = api({
+        ...this.Param,
+        [normalizer.param]: param.file
+      })
+      if (promise instanceof Promise) {
+        promise.then(res => {
+          const source = res && typeof res === 'string' ?
+            res :
+            getPropByPath(res, normalizer.response)
+          if (typeof source === 'string') {
+            this.$refs.filePond.addFile(source, { type: 'local' }).finally(file => {
               this.loaded()
             })
+          } else {
+            console.error('如果接口正常返回，请根据下方request返回值配置正确的normalizer.response：')
+            console.log(res)
+            err('获取文件url失败')
+            this.loaded()
           }
+        }).catch(e => {
+          this.loaded()
+        })
+      } else {
+        let reader = new FileReader()
+        reader.readAsDataURL(param.file)
+        reader.onload = e => {
+          this.$refs.filePond.addFile(e.target.result, { type: 'local' }).finally(file => {
+            this.loaded()
+          })
         }
       }
     },
