@@ -205,7 +205,10 @@ export default {
       return getFinalProp(globalEdit, this.edit, true)
     },
     Param () {
-      return getFinalProp(globalParam, this.param, {})
+      return {
+        ...globalParam,
+        ...this.param
+      }
     },
     formatList () {
       let str = ''
