@@ -5,7 +5,8 @@ import {
 } from './config'
 import { file2Base64 } from './utils'
 import Sortable from 'sortablejs'
-import { getPropByPath } from 'plain-kit'
+import { SweetAlert, getPropByPath } from 'plain-kit'
+const { err } = SweetAlert
 
 //submit()会触发http-request
 //如果是多选 submit()会连续多次触发http-request
@@ -54,8 +55,8 @@ export default {
       this.emitChange(this.files)
       this.loaded()
     },
-    element_onError (err, file, fileList) {
-      err(err)
+    element_onError (e, file, fileList) {
+      err(e)
       this.loaded()
     },
     element_httpRequest (item) {
@@ -74,10 +75,10 @@ export default {
           } else {
             console.error('如果接口正常返回，请根据下方request返回值配置正确的normalizer.response：')
             console.log(res)
-            this.element_onError('获取文件url失败')
+            this.element_onError('上传失败')
           }
         }).catch(e => {
-          item.onError(e)
+          this.element_onError('上传失败')
         })
       } else {
         file2Base64(item.file, base64 => {

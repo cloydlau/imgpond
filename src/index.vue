@@ -272,8 +272,8 @@ export default {
               load(res)
             }).catch(e => {
               this.loaded()
-              error('图片加载失败')
-              warn('图片加载失败')
+              error('上传失败')
+              warn('上传失败')
             }).finally(e => {
               load(null)
             }) :
@@ -490,7 +490,7 @@ export default {
           } else {
             console.error('如果接口正常返回，请根据下方request返回值配置正确的normalizer.response：')
             console.log(res)
-            err('获取文件url失败')
+            err('上传失败')
             this.loaded()
           }
         }).catch(e => {
