@@ -16,9 +16,9 @@
 - √ 支持限制图片大小、限制上传数量
 - √ 支持多选
 - √ 支持拖拉拽改变排序（响应式）
-- √ 灵活的数据类型：支持String/Array
+- √ 灵活的数据类型：支持string/array
 - √ 支持上传后预览/禁用时预览
-- √ 支持element-ui中el-form的全局disabled
+- √ 适配element-ui的el-form组件 支持el-form的全局disabled
 - √ 全局安装 通用参数支持全局配置
 
 <br/><br/>
@@ -46,22 +46,22 @@ Vue.use(Imgpond, { url: '接口地址' })
 
 | 参数 | 说明 | 配置方式 | 类型 | 可选值 | 默认值 |
 | --- | --- | --- | --- | --- | --- |
-| value / v-model | 双绑 | props | String / Array[String] | | |
-| fixedRatio | 固定裁剪比例 | props | String（形如1/1） / Array（形如['1/1', '2/1']） | | undefined（不作限制） |
-| fixedRatioDeviation | 固定裁剪比例误差范围（默认在＜±10%时不裁剪直接上传） | 全局 | Number | | 0.1 |
-| valueType | 数据类型 | props | String | 'String' / 'Array'（不区分大小写） | undefined（自动，单张String多张Array） |
+| value / v-model | 双绑 | props | string / array[string] | | |
+| fixedRatio | 固定裁剪比例 | props | string（形如1/1） / array（形如['1/1', '2/1']） | | undefined（不作限制） |
+| fixedRatioDeviation | 固定裁剪比例误差范围（默认在＜±10%时不裁剪直接上传） | 全局 | number | | 0.1 |
+| valueType | 数据类型 | props | string | 'string' / 'array'（不区分大小写） | undefined（自动，单张string多张array） |
 | request | axios实例 | 全局 | Axios | | |
-| requestConfig | axios配置 | 全局 | Object | | *详见下方说明 |
-| url | 上传接口地址 | 全局 | String | | |
-| maxSize | 图片大小限制（单位MB） | 全局，props | Number | | 10 |
-| count | 数量上限 | 全局，props | Number | | 50 |
-| param | 上传接口参数补充 | 全局，props | Object | | { file: '二进制文件' } |
-| edit | 是否开启裁剪功能 | 全局，props | Boolean | | true |
-| disabled | 是否禁用 | props | Boolean | | false |
-| poweredBy | 底层库（如果存在跨域困扰 建议使用'element'） | 全局 | String | 'filepond', 'element' | 'filepond' |
-| normalizer | 接口参数/返回值格式配置 | 全局 | Object | | *详见下方说明 |
-| localProxy | 本地代理（针对filepond） | 全局 | Object | | |
-| proxy | 代理（针对filepond） | 全局 | Object | | |
+| requestConfig | axios配置 | 全局 | object | | *详见下方说明 |
+| url | 上传接口地址 | 全局 | string | | |
+| maxSize | 图片大小限制（单位MB） | 全局，props | number | | 10 |
+| count | 数量上限 | 全局，props | number | | 50 |
+| param | 上传接口参数补充 | 全局，props | object | | { file: '二进制文件' } |
+| edit | 是否开启裁剪功能 | 全局，props | boolean | | true |
+| disabled | 是否禁用 | props | boolean | | false |
+| poweredBy | 底层库（如果存在跨域困扰 建议使用'element'） | 全局 | string | 'filepond', 'element' | 'filepond' |
+| normalizer | 接口参数/返回值格式配置 | 全局 | object | | *详见下方说明 |
+| localProxy | 本地代理（针对filepond） | 全局 | object | | |
+| proxy | 代理（针对filepond） | 全局 | object | | |
 
 <br/><br/>
 
