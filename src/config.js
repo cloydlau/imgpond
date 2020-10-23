@@ -24,15 +24,9 @@ export const init = (opts = {}) => {
 }
 
 export function api (param) {
-  // 参数
-  const data = {
-    ...globalParam,
-    ...param
-  }
-
   const formData = new FormData()
-  for (let k in data) {
-    formData.append(k, data[k])
+  for (let k in param) {
+    formData.append(k, param[k])
   }
 
   return url && (typeof request === 'function' ? request({
@@ -41,14 +35,14 @@ export function api (param) {
     method: 'POST',
     data: formData,
     timeout: 20000,
-    ...typeof requestConfig === 'function' ? requestConfig(data) : requestConfig
+    ...typeof requestConfig === 'function' ? requestConfig(param) : requestConfig
   }) : fetch(url, {
     method: 'POST',
     mode: 'cors',
     credentials: 'include',
     headers: {},
     body: formData,
-    ...typeof requestConfig === 'function' ? requestConfig(data) : requestConfig
+    ...typeof requestConfig === 'function' ? requestConfig(param) : requestConfig
   }).then(res => {
     if (res.ok) {
       return res.json()
@@ -72,4 +66,5 @@ export {
   fixedRatioDeviation,
   poweredBy,
   normalizer,
+  globalParam,
 }

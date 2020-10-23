@@ -94,7 +94,8 @@ import {
   globalMaxSize,
   fixedRatioDeviation,
   poweredBy,
-  normalizer
+  normalizer,
+  globalParam
 } from './config'
 import { PicViewer } from 'pic-viewer'
 import { isArrayJSON, getOrigin, getFinalProp } from './utils'
@@ -145,18 +146,18 @@ export default {
         return true
       }
     },
-    disabled: Boolean,
+    disabled: {
+      validator: value => ['boolean'].includes(typeOf(value))
+    },
     edit: {
-      type: Boolean,
-      default: true
+      validator: value => ['boolean'].includes(typeOf(value))
     },
     value: {
       validator: value => ['string', 'null', 'array'].includes(typeOf(value)),
     },
     valueType: String,
     compress: {
-      type: Boolean,
-      default: true
+      validator: value => ['boolean'].includes(typeOf(value))
     },
     maxSize: {
       validator: value => {
@@ -170,10 +171,7 @@ export default {
         return true
       }
     },
-    param: {
-      type: Object,
-      default: () => {}
-    }
+    param: Object
   },
   model: {
     prop: 'value',
@@ -205,6 +203,9 @@ export default {
     },
     Edit () {
       return getFinalProp(globalEdit, this.edit, true)
+    },
+    Param () {
+      return getFinalProp(globalParam, this.param, {})
     },
     formatList () {
       let str = ''
@@ -473,7 +474,7 @@ export default {
 
       function fn (file) {
         const promise = api({
-          ...this.param,
+          ...this.Param,
           [normalizer.param]: file
         })
         if (promise) {
