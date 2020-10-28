@@ -14,7 +14,12 @@ if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
-export default {
-  install,
+// @ts-ignore
+Imgpond.install = install
+
+export default Imgpond
+
+// todo: deprecated
+export {
   Imgpond
 }

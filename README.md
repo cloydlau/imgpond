@@ -33,6 +33,11 @@ $ yarn add imgpond
 
 ```js
 import Imgpond from 'imgpond'
+
+// 组件内引入（≥0.2.13）
+components: { Imgpond }
+
+// 全局引入
 Vue.use(Imgpond, { url: '接口地址' })
 ```
 
