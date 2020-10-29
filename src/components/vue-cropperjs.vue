@@ -3,14 +3,16 @@
     <div class="content">
       <section class="cropper-area">
         <div class="img-cropper">
-          <vue-cropper ref="cropper"
-                       :src="imgSrc"
-                       :containerStyle="containerStyle"
-                       preview=".preview"
-                       :minContainerHeight="500"
-                       background
-                       :ready="onReady"
-                       :cropmove="onCropmove"
+          <vue-cropper
+            ref="cropper"
+            :src="imgSrc"
+            :containerStyle="containerStyle"
+            preview=".preview"
+            :minContainerHeight="500"
+            background
+            :ready="onReady"
+            :cropmove="touch"
+            :zoom="touch"
           />
         </div>
         <div class="actions">
@@ -72,7 +74,7 @@ export default {
     }
   },
   methods: {
-    onCropmove () {
+    touch () {
       this.untouched = false
     },
     onReady () {

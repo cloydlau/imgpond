@@ -1,29 +1,28 @@
-import { isEmpty } from 'plain-kit'
-
 let request, url, globalParam, globalCount, globalEdit, globalMaxSize, localProxy, proxy, sizeExceededWarningHTML,
-  fixedRatioDeviation, poweredBy, normalizer, requestConfig
+  fixedRatioDeviation, poweredBy, normalizer, requestConfig, valueType, fixedRatio, accept
 
 export const init = (opts = {}) => {
   request = opts.request
   requestConfig = opts.requestConfig
   url = opts.url
+  accept = opts.accept
   globalParam = opts.param
   globalCount = opts.count
   globalEdit = opts.edit
   globalMaxSize = opts.maxSize
-  fixedRatioDeviation = isEmpty(opts.fixedRatioDeviation) ? .1 : opts.fixedRatioDeviation
-  localProxy = opts.localProxy || {}
-  proxy = opts.proxy || {}
-  sizeExceededWarningHTML = opts.sizeExceededWarningHTML || ''
+  localProxy = opts.localProxy
+  proxy = opts.proxy
+  valueType = opts.valueType
+  sizeExceededWarningHTML = opts.sizeExceededWarningHTML
+  fixedRatio = opts.fixedRatio
+  fixedRatioDeviation = opts.fixedRatioDeviation
   poweredBy = opts.poweredBy || 'filepond'
-  normalizer = {
-    response: 'data',
-    param: 'file',
-    ...opts.normalizer || opts.key // todo: deprecated
-  }
+  normalizer = opts.normalizer || opts.key // todo: deprecated
 }
 
-export function api (param) {
+export function api ({
+  url, param, request, requestConfig
+}) {
   const formData = new FormData()
   for (let k in param) {
     formData.append(k, param[k])
@@ -56,15 +55,20 @@ export function api (param) {
 }
 
 export {
+  url,
+  accept,
   request,
+  requestConfig,
   localProxy,
   proxy,
   sizeExceededWarningHTML,
   globalCount,
   globalEdit,
   globalMaxSize,
+  fixedRatio,
   fixedRatioDeviation,
   poweredBy,
   normalizer,
   globalParam,
+  valueType
 }

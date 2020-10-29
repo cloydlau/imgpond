@@ -1,71 +1,77 @@
 <template>
   <div>
-    <PicViewer v-show="Disabled"
-               :value="files"
-               ref="PicViewer"
-               objectKey="source"
+    <PicViewer
+      v-show="Disabled"
+      :value="files"
+      ref="PicViewer"
+      objectKey="source"
     />
 
     <div v-if="!Disabled" :class="{'full': isFull}">
-      <el-upload v-if="poweredBy==='element'"
-                 ref="element-upload"
-                 action="#"
-                 :auto-upload="false"
-                 list-type="picture-card"
-                 :file-list="files"
-                 :disabled="Disabled"
-                 :limit="Count"
-                 :multiple="Count!==1"
-                 :accept="formatList"
-                 :on-change="element_onChange"
-                 :on-preview="onActivatefile"
-                 :on-remove="element_onRemove"
-                 :on-exceed="onWarning"
-                 :on-success="element_onSuccess"
-                 :on-error="element_onError"
-                 :http-request="element_httpRequest"
+      <el-upload
+        v-if="poweredBy==='element'"
+        ref="element-upload"
+        action="#"
+        :auto-upload="false"
+        list-type="picture-card"
+        :file-list="files"
+        :disabled="Disabled"
+        :limit="Count"
+        :multiple="Count!==1"
+        :accept="Accept"
+        :on-change="element_onChange"
+        :on-preview="onActivatefile"
+        :on-remove="element_onRemove"
+        :on-exceed="onWarning"
+        :on-success="element_onSuccess"
+        :on-error="element_onError"
+        :http-request="element_httpRequest"
       >
         <i class="el-icon-plus"/>
         <div class="el-upload__text">{{ this.fixedRatioText ? '宽高比' + this.fixedRatioText : '' }}</div>
       </el-upload>
 
-      <file-pond v-else
-                 ref="filePond"
-                 :label-idle="'点击上传'+(this.fixedRatioText?'（宽高比'+this.fixedRatioText+'）':'')"
-                 :allowDrop="false"
-                 :allowReorder="true"
-                 :allowMultiple="Count!==1"
-                 :accepted-file-types="Object.keys(format).join(', ')"
-                 labelFileTypeNotAllowed="不支持的格式，请删除"
-                 fileValidateTypeLabelExpectedTypes="仅支持{allButLastType}和{lastType}"
-                 :fileValidateTypeLabelExpectedTypesMap="format"
-                 :server="server"
-                 :files="files"
-                 :max-files="Count||null"
-                 @init="handleFilePondInit"
-                 :beforeAddFile="beforeAddFile"
-                 :disabled="Disabled"
-                 @onaddfilestart="onAddFileStart"
-                 styleItemPanelAspectRatio="1"
-                 @updatefiles="onUpdateFiles"
-                 :beforeRemoveFile="beforeRemoveFile"
-                 :onwarning="onWarning"
-                 @reorderfiles="emitChange"
-                 @activatefile="onActivatefile"
+      <file-pond
+        v-else
+        ref="filePond"
+        :label-idle="'点击上传'+(this.fixedRatioText?'（宽高比'+this.fixedRatioText+'）':'')"
+        :allowDrop="false"
+        :allowReorder="true"
+        :allowMultiple="Count!==1"
+        :accepted-file-types="Object.keys(format).join(', ')"
+        labelFileTypeNotAllowed="不支持的格式，请删除"
+        fileValidateTypeLabelExpectedTypes="仅支持{allButLastType}和{lastType}"
+        :fileValidateTypeLabelExpectedTypesMap="format"
+        :server="server"
+        :files="files"
+        :max-files="Count||null"
+        @init="handleFilePondInit"
+        :beforeAddFile="beforeAddFile"
+        :disabled="Disabled"
+        @onaddfilestart="onAddFileStart"
+        styleItemPanelAspectRatio="1"
+        @updatefiles="onUpdateFiles"
+        :beforeRemoveFile="beforeRemoveFile"
+        :onwarning="onWarning"
+        @reorderfiles="emitChange"
+        @activatefile="onActivatefile"
       />
 
-      <el-dialog title='图片编辑'
-                 :visible.sync="cropper.show"
-                 :close-on-click-modal="false"
-                 :append-to-body="true"
-                 destroy-on-close
-                 @close="onCropperClose"
+      <el-dialog
+        title='图片编辑'
+        :visible.sync="cropper.show"
+        :close-on-click-modal="false"
+        :append-to-body="true"
+        destroy-on-close
+        @close="onCropperClose"
       >
-        <Cropper ref="crop"
-                 :file="cropper.file"
-                 :aspectRatio="aspectRatio"
-                 :fixedRatioText="fixedRatioText"
-                 @stopCrop="stopCrop"/>
+        <Cropper
+          ref="crop"
+          :file="cropper.file"
+          :aspectRatio="aspectRatio"
+          :fixedRatioText="fixedRatioText"
+          @stopCrop="stopCrop"
+        />
         <div slot="footer">
           <!--<el-switch
              v-model="compression.on"
@@ -85,17 +91,22 @@
 import Cropper from './components/vue-cropperjs'
 import {
   api,
+  url,
+  accept,
   request,
+  requestConfig,
   localProxy,
   proxy,
   sizeExceededWarningHTML,
   globalCount,
   globalEdit,
   globalMaxSize,
+  fixedRatio,
   fixedRatioDeviation,
   poweredBy,
   normalizer,
-  globalParam
+  globalParam,
+  valueType
 } from './config'
 import { PicViewer } from 'pic-viewer'
 import { isArrayJSON, getOrigin, getFinalProp } from './utils'
@@ -133,6 +144,12 @@ export default {
   },
   components: { FilePond, Cropper, PicViewer },
   props: {
+    accept: [Array, String],
+    fixedRatioDeviation: Number,
+    request: Function,
+    requestConfig: Object,
+    url: String,
+    normalizer: Object,
     fixedRatio: [Array, String],
     count: {
       validator: value => {
@@ -178,6 +195,31 @@ export default {
     event: 'change'
   },
   computed: {
+    Accept () {
+      return getFinalProp(accept, this.accept, 'image/jpeg,.jpg,.jpeg,image/png,.png')
+    },
+    FixedRatio () {
+      return getFinalProp(fixedRatio, this.fixedRatio)
+    },
+    FixedRatioDeviation () {
+      return getFinalProp(fixedRatioDeviation, this.fixedRatioDeviation, 0.1)
+    },
+    Request () {
+      return getFinalProp(request, this.request)
+    },
+    RequestConfig () {
+      return getFinalProp(requestConfig, this.requestConfig)
+    },
+    Url () {
+      return getFinalProp(url, this.url)
+    },
+    Normalizer () {
+      return {
+        response: 'data',
+        param: 'file',
+        ...getFinalProp(normalizer, this.normalizer)
+      }
+    },
     Disabled () {
       return this.disabled || (this.elForm || {}).disabled
     },
@@ -185,15 +227,15 @@ export default {
       return this.files.length >= this.Count
     },
     fixedRatioText () {
-      if (this.fixedRatio) {
-        if (this.fixedRatio instanceof Array) {
-          return this.fixedRatio.map(v => v.replace('/', ':')).join(' ~ ')
+      if (this.FixedRatio) {
+        if (this.FixedRatio instanceof Array) {
+          return this.FixedRatio.map(v => v.replace('/', ':')).join(' ~ ')
         }
-        return this.fixedRatio.replace('/', ':')
+        return this.FixedRatio.replace('/', ':')
       }
     },
     ValueType () {
-      return this.valueType?.toLowerCase()
+      return getFinalProp(valueType, this.valueType)?.toLowerCase()
     },
     Count () {
       return getFinalProp(globalCount, this.count, 50)
@@ -264,16 +306,21 @@ export default {
             }
           }
 
-          typeof request === 'function' ?
-            request({
+          typeof this.Request === 'function' ?
+            this.Request({
               url: source,
               responseType: 'blob',
             }).then(res => {
               load(res)
             }).catch(e => {
               this.loaded()
-              error('上传失败')
-              warn('上传失败')
+              error('图片加载失败')
+              warn('图片加载失败')
+              console.error(
+                `[Imgpond] 图片加载失败 如果上方有跨域错误提示 说明由跨域造成
+  如何解决跨域：
+    方案1：在全局配置中将poweredBy配置为'element'；
+    方案2：在全局配置中配置proxy/localProxy`)
             }).finally(e => {
               load(null)
             }) :
@@ -366,11 +413,11 @@ export default {
     handleFilePondInit () {
     },
     handleAspectRatio (file) {
-      if (typeof this.fixedRatio === 'string') {
-        const temp = this.fixedRatio.split('/')
+      if (typeof this.FixedRatio === 'string') {
+        const temp = this.FixedRatio.split('/')
         this.aspectRatio = temp[0] / temp[1]
       } else {
-        this.aspectRatio = this.fixedRatio.map(v => {
+        this.aspectRatio = this.FixedRatio.map(v => {
           const temp = v.split('/')
           return temp[0] / temp[1]
         })
@@ -385,13 +432,16 @@ export default {
             if (this.aspectRatio instanceof Array) {
               resolve(aspectRatio < this.aspectRatio[0] || aspectRatio > this.aspectRatio[1])
             } else {
-              resolve(aspectRatio < this.aspectRatio * (1 - fixedRatioDeviation) || aspectRatio > this.aspectRatio * (1 + fixedRatioDeviation))
+              resolve(aspectRatio < this.aspectRatio * (1 - this.FixedRatioDeviation) || aspectRatio > this.aspectRatio * (1 + this.FixedRatioDeviation))
             }
           }
           image.src = e.target.result
         }
         fileReader.readAsDataURL(file)
       })
+    },
+    verifyExtension () {
+
     },
     async beforeAddFile (item) {
       /**
@@ -407,7 +457,7 @@ export default {
         if (item.file.size > this.MaxSize * MB) {
           warn({
             titleText: '图片大小不能超过' + this.MaxSize + 'MB',
-            html: sizeExceededWarningHTML,
+            html: sizeExceededWarningHTML ?? '',
             timer: sizeExceededWarningHTML ? 5000 : 3000
           })
           item.fileList && item.fileList.splice(item.fileList.indexOf(item.file), 1)
@@ -416,7 +466,7 @@ export default {
         //this.compression.on = this.compress && item.file.size >= .2 * MB
         console.log('[Imgpond] 裁剪前：', item.file)
         if (this.Edit) {
-          if (this.fixedRatio) {
+          if (this.FixedRatio) {
             this.need2Crop = await this.handleAspectRatio(item.file)
           } else {
             this.need2Crop = false
@@ -475,25 +525,30 @@ export default {
       //}
 
       const promise = api({
-        ...this.Param,
-        [normalizer.param]: param.file
+        url: this.Url,
+        param: {
+          ...this.Param,
+          [this.Normalizer.param]: param.file
+        },
+        request: this.Request,
+        requestConfig: this.RequestConfig
       })
       if (promise instanceof Promise) {
         promise.then(res => {
-          const source = res && typeof res === 'string' ?
-            res :
-            getPropByPath(res, normalizer.response)
-          if (typeof source === 'string') {
+          const source = typeof this.Normalizer.response === 'function' ? this.Normalizer.response(res) :
+            typeof res === 'string' ? res :
+              getPropByPath(res, this.Normalizer.response)
+          if (typeof source === 'string' && source) {
             this.$refs.filePond.addFile(source, { type: 'local' }).finally(file => {
               this.loaded()
             })
           } else {
-            console.error('如果接口正常返回，请根据下方request返回值配置正确的normalizer.response：')
-            console.log(res)
+            console.error('[Imgpond] 上传失败，如果接口正常返回，请检查normalizer.response配置')
             err('上传失败')
-            this.loaded()
           }
         }).catch(e => {
+          err('上传失败')
+        }).finally(e => {
           this.loaded()
         })
       } else {

@@ -15,11 +15,15 @@
 - √ 支持上传前裁剪图片 可以固定裁剪比例、限定比例范围
 - √ 支持限制图片大小、限制上传数量
 - √ 支持多选
-- √ 支持拖拉拽改变排序（响应式）
+- √ 支持拖拉拽排序（响应式）
 - √ 灵活的数据类型：支持string/array
 - √ 支持上传后预览/禁用时预览
-- √ 适配element-ui的el-form组件 支持el-form的全局disabled
-- √ 全局安装 通用参数支持全局配置
+- √ 全局安装/组件内引入 通用参数支持全局配置
+
+element-ui集成说明：
+
+- element-ui是以外置依赖的方式引入的 所以不必担心代码体积和版本不一致等问题
+- 适配element-ui的el-form组件 支持el-form的全局disabled
 
 <br/>
 
@@ -34,7 +38,7 @@ $ yarn add imgpond
 ```js
 import Imgpond from 'imgpond'
 
-// 组件内引入（≥0.2.13）
+// 组件内引入
 components: { Imgpond }
 
 // 全局引入
@@ -49,24 +53,24 @@ Vue.use(Imgpond, { url: '接口地址' })
 <Imgpond v-model=""/>
 ```
 
-| 参数 | 说明 | 配置方式 | 类型 | 可选值 | 默认值 |
+| Attribute | Description | Configuration Mode | Type | Accepted Values | Default |
 | --- | --- | --- | --- | --- | --- |
-| value / v-model | 双绑 | props | string / array[string] | | |
-| fixedRatio | 固定裁剪比例 | props | string（形如1/1） / array（形如['1/1', '2/1']） | | undefined（不作限制） |
-| fixedRatioDeviation | 固定裁剪比例误差范围（默认在＜±10%时不裁剪直接上传） | 全局 | number | | 0.1 |
-| valueType | 数据类型 | props | string | 'string' / 'array'（不区分大小写） | undefined（自动，单张string多张array） |
-| request | axios实例 | 全局 | axios | | |
-| requestConfig | axios配置 | 全局 | object / function | | *详见下方说明 |
-| url | 上传接口地址 | 全局 | string | | |
-| maxSize | 图片大小限制（单位MB） | 全局，props | number | | 10 |
-| count | 数量上限 | 全局，props | number | | 50 |
-| param | 上传接口参数补充 | 全局，props | object | | { file: '二进制文件' } |
-| edit | 是否开启裁剪功能 | 全局，props | boolean | | true |
+| v-model / value | 双绑 | props | string / array[string] | | |
+| fixedRatio | 固定裁剪比例 | global, props | string（形如1/1） / array（形如['1/1', '2/1']） | | undefined（不作限制） |
+| fixedRatioDeviation | 固定裁剪比例误差范围（默认在＜±10%时不裁剪直接上传） | global, props | number | | 0.1 |
+| valueType | 数据类型 | global, props | string | 'string' / 'array'（不区分大小写） | undefined（自动，单张string多张array） |
+| request | axios实例 | global, props | axios | | |
+| requestConfig | axios配置 | global, props | object / function | | *see below* |
+| url | 上传接口地址 | global, props | string | | |
+| maxSize | 图片大小限制（单位MB） | global，props | number | | 10 |
+| count | 数量上限 | global，props | number | | 50 |
+| param | 上传接口参数补充 | global，props | object | | { file: '二进制文件' } |
+| edit | 是否开启裁剪功能 | global，props | boolean | | true |
 | disabled | 是否禁用 | props | boolean | | false |
-| poweredBy | 底层库（如果存在跨域困扰 建议使用'element'） | 全局 | string | 'filepond', 'element' | 'filepond' |
-| normalizer | 接口参数/返回值格式配置 | 全局 | object | | *详见下方说明 |
-| localProxy | 本地代理（针对filepond） | 全局 | object | | |
-| proxy | 代理（针对filepond） | 全局 | object | | |
+| poweredBy | 底层库（如果存在跨域困扰 建议使用'element'） | global | string | 'filepond', 'element' | 'filepond' |
+| normalizer | 接口参数/返回值格式配置 | global, props | object | | *see below* |
+| localProxy | 本地代理（针对filepond） | global | object | | |
+| proxy | 代理（针对filepond） | global | object | | |
 
 <br/>
 
@@ -167,6 +171,16 @@ Vue.use(Imgpond, {
 })
 ```
 
+normalizer.response支持function类型，这在接口返回值是相对路径需要进行拼接时会派上用场：
+
+```js
+Vue.use(Imgpond, {
+  normalizer: {
+    response: res => 'some-domain' + res.data.data
+  },
+})
+```
+
 <br/>
 
 proxy / localProxy:
@@ -183,9 +197,9 @@ proxy / localProxy:
 
 ```js
 Vue.use(Imgpond, {
-    proxy: {
-      '/amap-img': 'store.is.autonavi.com'
-    }
+  proxy: {
+    '/amap-img': 'store.is.autonavi.com'
+  }
 })
 ```
 

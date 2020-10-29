@@ -1,7 +1,6 @@
 import {
   api,
   poweredBy,
-  normalizer
 } from './config'
 import { file2Base64 } from './utils'
 import Sortable from 'sortablejs'
@@ -61,19 +60,24 @@ export default {
     },
     element_httpRequest (item) {
       const promise = api({
-        ...this.Param,
-        [normalizer.param]: item.file
+        url: this.Url,
+        param: {
+          ...this.Param,
+          [this.Normalizer.param]: item.file
+        },
+        request: this.Request,
+        requestConfig: this.RequestConfig
       })
       if (promise instanceof Promise) {
         promise.then(res => {
-          const source = res && typeof res === 'string' ?
-            res :
-            getPropByPath(res, normalizer.response)
-          if (typeof source === 'string') {
+          const source = typeof this.Normalizer.response === 'function' ? this.Normalizer.response(res) :
+            typeof res === 'string' ? res :
+              getPropByPath(res, this.Normalizer.response)
+          if (typeof source === 'string' && source) {
             //item.onSuccess(source, item.file)
             this.element_onSuccess(source, item.file)
           } else {
-            console.error('如果接口正常返回，请根据下方request返回值配置正确的normalizer.response：')
+            console.error('[Imgpond] 上传失败，如果接口正常返回，请检查normalizer.response配置')
             console.log(res)
             this.element_onError('上传失败')
           }

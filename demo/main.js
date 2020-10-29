@@ -8,17 +8,18 @@ Vue.use(ElementUI)
 import Imgpond from '../src/main.js'
 import axios from 'axios'
 Vue.use(Imgpond, {
-  request: () => new Promise(resolve => {
-    /*resolve({
+  /*request: () => new Promise(resolve => {
+    /!*resolve({
       data: {
         url: 'https://placem.at/people?random=1&txt=0&w=1000&h=500'
       }
-    })*/
+    })*!/
     reject()
-  }),
-  //request: axios,
+  }),*/
+  url: '',
+  request: axios,
   normalizer: {
-    response: 'data.data.url'
+    response: res => res.data.data
   },
   param: {},
   count: 50,

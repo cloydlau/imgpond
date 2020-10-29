@@ -7,6 +7,8 @@
 
 <script>
 import PropsEditor from './PropsEditor'
+import Imgpond from '../src/main.js'
+import axios from 'axios'
 
 export default {
   components: { PropsEditor },
@@ -22,8 +24,17 @@ export default {
         disabled: false,
         edit: true,
         valueType: undefined,
-        param: {},
+        param: {
+          domainId: 1,
+          dir: 'img'
+        },
         maxSize: 10,
+        url: '',
+        request: axios,
+        normalizer: {
+          response: res => res.data.data
+        },
+        fixedRatioDeviation: 0.1,
       }
     }
   },
