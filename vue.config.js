@@ -23,7 +23,7 @@ module.exports = {
       library: 'imgpond',
       libraryTarget: 'umd',
       umdNamedDefine: true,
-      libraryExport: 'default'
+      //libraryExport: 'default'
     },
     externals
   }
