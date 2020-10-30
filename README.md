@@ -33,7 +33,7 @@ element-ui集成说明：
 $ yarn add imgpond
 ```
 
-**Dependencies**：vue element-ui pic-viewer plain-kit
+**Dependencies**：vue element-ui pic-viewer
 
 ```js
 import Imgpond from 'imgpond'
@@ -71,6 +71,7 @@ Vue.use(Imgpond, { url: '接口地址' })
 | normalizer | 接口参数/返回值格式配置 | global, props | object | | *see below* |
 | localProxy | 本地代理（针对filepond） | global | object | | |
 | proxy | 代理（针对filepond） | global | object | | |
+| accept | 接受上传的[文件类型](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | global, props | string | http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types | '.jpg,.jpeg,.png' |
 
 <br/>
 
@@ -223,8 +224,11 @@ module.exports = {
 <br/>
 
 ### Notice
+
 - 不配置上传接口也可以使用 只是得到的不是图片链接而是base64
 - 曾支持canvas图片压缩 但效果不理想 尤其对png不友好 图片压缩还是建议后端来做
-- 图片格式目前写死支持jpg/jpeg/png 暂不提供配置
 - poweredBy参数配置为filepond时 图片链接服务最好能够提供nginx跨域支持（推荐）
 - 针对不支持跨域的情况 提供了localhost/线上的代理配置
+- 关于格式校验
+  - element：原生input的accept属性+后缀名判断双重校验
+  - filepond：仅后缀名判断 因为filepond的accepted-file-types属性仅支持mime 细粒度太粗 详见https://github.com/pqina/filepond/issues/43

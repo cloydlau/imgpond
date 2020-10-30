@@ -2691,7 +2691,7 @@ core-js@^2.4.0:
   resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha1-OIMUafmSK97Y7iHJ3EaYXgOZMIw=
 
-core-js@^3.6.0, core-js@^3.6.5, core-js@~3.6.0:
+core-js@^3.6.0, core-js@^3.6.5:
   version "3.6.5"
   resolved "https://registry.npm.taobao.org/core-js/download/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
   integrity sha1-c5XcJzrzf7LlDpvT2f6EEoUjHRo=
@@ -3665,20 +3665,20 @@ file-uri-to-path@1.0.0:
   resolved "https://registry.npm.taobao.org/file-uri-to-path/download/file-uri-to-path-1.0.0.tgz#553a7b8446ff6f684359c445f1e37a05dacc33dd"
   integrity sha1-VTp7hEb/b2hDWcRF8eN6BdrMM90=
 
-filepond-plugin-file-validate-type@~1.2.5:
+filepond-plugin-file-validate-type@^1.2.5:
   version "1.2.5"
   resolved "https://registry.npm.taobao.org/filepond-plugin-file-validate-type/download/filepond-plugin-file-validate-type-1.2.5.tgz#b3588088d2b0d5dbdf706d068c0ecdf28140a8e3"
   integrity sha1-s1iAiNKw1dvfcG0GjA7N8oFAqOM=
 
-filepond-plugin-image-preview@~4.6.4:
+filepond-plugin-image-preview@^4.6.4:
   version "4.6.4"
   resolved "https://registry.npm.taobao.org/filepond-plugin-image-preview/download/filepond-plugin-image-preview-4.6.4.tgz#19edade651559cf8c9fb97bcc8ce56af16ebae67"
   integrity sha1-Ge2t5lFVnPjJ+5e8yM5Wrxbrrmc=
 
-filepond@4.17.1:
-  version "4.17.1"
-  resolved "https://registry.npm.taobao.org/filepond/download/filepond-4.17.1.tgz#f9412ddc1c4430657480862fe73a5e2ae64cdda2"
-  integrity sha1-+UEt3BxEMGV0gIYv5zpeKuZM3aI=
+filepond@^4.22.0:
+  version "4.22.0"
+  resolved "https://registry.npm.taobao.org/filepond/download/filepond-4.22.0.tgz#5877f17bdc62651512f1e785d7bc85f84f1679a9"
+  integrity sha1-WHfxe9xiZRUS8eeF17yF+E8Weak=
 
 filesize@^3.6.1:
   version "3.6.1"
@@ -6801,10 +6801,10 @@ sass-loader@^10.0.0:
     schema-utils "^3.0.0"
     semver "^7.3.2"
 
-sass@^1.27.0:
-  version "1.27.0"
-  resolved "https://registry.npm.taobao.org/sass/download/sass-1.27.0.tgz#0657ff674206b95ec20dc638a93e179c78f6ada2"
-  integrity sha1-Blf/Z0IGuV7CDcY4qT4XnHj2raI=
+sass@^1.28.0:
+  version "1.28.0"
+  resolved "https://registry.npm.taobao.org/sass/download/sass-1.28.0.tgz#546f1308ff74cc4ec2ad735fd35dc18bc3f51f72"
+  integrity sha1-VG8TCP90zE7CrXNf013Bi8P1H3I=
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
@@ -7869,14 +7869,14 @@ vm-browserify@^1.0.1:
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
 
-vue-cropperjs@~4.1.0:
+vue-cropperjs@^4.1.0:
   version "4.1.0"
   resolved "https://registry.npm.taobao.org/vue-cropperjs/download/vue-cropperjs-4.1.0.tgz#f52b944611e689fd5f0c59bab0b30fe64de1b58e"
   integrity sha1-9SuURhHmif1fDFm6sLMP5k3htY4=
   dependencies:
     cropperjs "^1.5.6"
 
-vue-filepond@~6.0.3:
+vue-filepond@^6.0.3:
   version "6.0.3"
   resolved "https://registry.npm.taobao.org/vue-filepond/download/vue-filepond-6.0.3.tgz#199871e7d91f4d6a6c4ba5a4e653c6ce9cafbfa9"
   integrity sha1-GZhx59kfTWpsS6Wk5lPGzpyvv6k=

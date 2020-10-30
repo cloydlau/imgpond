@@ -38,10 +38,8 @@
         :allowDrop="false"
         :allowReorder="true"
         :allowMultiple="Count!==1"
-        :accepted-file-types="Object.keys(format).join(', ')"
         labelFileTypeNotAllowed="不支持的格式，请删除"
         fileValidateTypeLabelExpectedTypes="仅支持{allButLastType}和{lastType}"
-        :fileValidateTypeLabelExpectedTypesMap="format"
         :server="server"
         :files="files"
         :max-files="Count||null"
@@ -144,7 +142,7 @@ export default {
   },
   components: { FilePond, Cropper, PicViewer },
   props: {
-    accept: [Array, String],
+    accept: String,
     fixedRatioDeviation: Number,
     request: Function,
     requestConfig: Object,
@@ -196,7 +194,7 @@ export default {
   },
   computed: {
     Accept () {
-      return getFinalProp(accept, this.accept, 'image/jpeg,.jpg,.jpeg,image/png,.png')
+      return getFinalProp(accept, this.accept, '.jpg,.jpeg,.png')
     },
     FixedRatio () {
       return getFinalProp(fixedRatio, this.fixedRatio)
@@ -252,23 +250,12 @@ export default {
         ...this.param
       }
     },
-    formatList () {
-      let str = ''
-      for (let k in this.format) {
-        str += (str ? ', ' : '') + this.format[k]
-      }
-      return str
-    }
   },
   data () {
     return {
       poweredBy,
       need2Crop: true,
       aspectRatio: undefined,
-      format: {
-        'image/jpeg': '.jpg, .jpeg',
-        'image/png': '.png'
-      },
       cropper: {
         queue: [],
         show: false,
@@ -440,17 +427,23 @@ export default {
         fileReader.readAsDataURL(file)
       })
     },
-    verifyExtension () {
-
+    verifyExtension (fileName) {
+      if (this.Accept) {
+        const extension = fileName.replace(/.+\./, '').toLowerCase()
+        const result = this.Accept.includes(extension)
+        if (!result) {
+          warn('仅支持' + this.Accept)
+        }
+        return result
+      }
+      return true
     },
     async beforeAddFile (item) {
       /**
        * 拖入时该回调会触发三次
        */
       if (item.file instanceof File) {
-        const format = item.file.name.replace(/.+\./, '').toLowerCase()
-        if (!this.formatList.includes(format)) {
-          warn('仅支持' + this.formatList)
+        if (!this.verifyExtension(item.file.name)) {
           item.fileList && item.fileList.splice(item.fileList.indexOf(item.file), 1)
           return false
         }

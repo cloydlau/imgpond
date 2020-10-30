@@ -1,6 +1,6 @@
 {
   "name": "imgpond",
-  "version": "0.2.13",
+  "version": "0.3.0",
   "author": "cloydlau",
   "description": "An editable and sortable image uploader powered by filepond & element",
   "keywords": [
@@ -25,14 +25,14 @@
     "lib": "vue-cli-service build --target lib --name imgpond src/main.js"
   },
   "dependencies": {
-    "core-js": "~3.6.0",
-    "filepond": "4.17.1",
-    "filepond-plugin-file-validate-type": "~1.2.5",
-    "filepond-plugin-image-preview": "~4.6.4",
+    "core-js": "^3.6.0",
+    "filepond": "^4.22.0",
+    "filepond-plugin-file-validate-type": "^1.2.5",
+    "filepond-plugin-image-preview": "^4.6.4",
     "plain-kit": "^0.4.3",
     "sortablejs": "^1.12.0",
-    "vue-cropperjs": "~4.1.0",
-    "vue-filepond": "~6.0.3"
+    "vue-cropperjs": "^4.1.0",
+    "vue-filepond": "^6.0.3"
   },
   "peerDependencies": {
     "element-ui": "^2.14.0",
@@ -47,7 +47,7 @@
     "element-ui": "^2.14.0",
     "json-editor-vue": "^0.0.4",
     "pic-viewer": "^0.2.7",
-    "sass": "^1.27.0",
+    "sass": "^1.28.0",
     "sass-loader": "^10.0.0",
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.6.12"

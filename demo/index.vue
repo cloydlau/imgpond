@@ -29,7 +29,7 @@ export default {
           dir: 'img'
         },
         maxSize: 10,
-        url: '',
+        url: undefined,
         request: axios,
         normalizer: {
           response: res => res.data.data

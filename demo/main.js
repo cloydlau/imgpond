@@ -21,7 +21,10 @@ Vue.use(Imgpond, {
   normalizer: {
     response: res => res.data.data
   },
-  param: {},
+  param: {
+    domainId: 1,
+    dir: 'img'
+  },
   count: 50,
   edit: true,
   maxSize: 10,
