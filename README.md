@@ -77,6 +77,8 @@ Vue.use(Imgpond, { url: '接口地址' })
 
 requestConfig
 
+ajax请求配置
+
 默认值：
 ```json
 {
@@ -110,6 +112,17 @@ Vue.use(Imgpond, {
       data: formData,
     }
   }
+})
+```
+
+如果不需要拿到data 你也可以用这种方式来修改配置：
+
+```js
+Vue.use(Imgpond, {
+  request: config => request({
+    ...config,
+    timeout: 10000
+  }),
 })
 ```
 
