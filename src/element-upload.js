@@ -4,8 +4,8 @@ import {
 } from './config'
 import { file2Base64 } from './utils'
 import Sortable from 'sortablejs'
-import { SweetAlert, getPropByPath } from 'plain-kit'
-const { err } = SweetAlert
+import { Swal, getPropByPath } from 'plain-kit'
+const { err } = Swal
 
 //submit()会触发http-request
 //如果是多选 submit()会连续多次触发http-request
@@ -13,7 +13,7 @@ const { err } = SweetAlert
 export default {
   methods: {
     sort () {
-      if (!this.disabled && !this.sortablejs && poweredBy === 'element') {
+      if (!this.Disabled && !this.sortablejs && poweredBy === 'element') {
         this.$nextTick(() => {
           this.sortablejs = Sortable.create(document.querySelector('.el-upload-list'), {
             animation: 500,

@@ -121,8 +121,8 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 
-import { isEmpty, getPropByPath, SweetAlert, typeOf } from 'plain-kit'
-const { warn, confirmation, err } = SweetAlert
+import { isEmpty, getPropByPath, Swal, typeOf } from 'plain-kit'
+const { warn, confirmation, err } = Swal
 
 const FilePond = vueFilePond(
   //FilePondPluginImageOverlay,

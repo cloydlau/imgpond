@@ -2959,10 +2959,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-dayjs@^1.9.4:
-  version "1.9.4"
-  resolved "https://registry.npm.taobao.org/dayjs/download/dayjs-1.9.4.tgz#fcde984e227f4296f04e7b05720adad2e1071f1b"
-  integrity sha1-/N6YTiJ/QpbwTnsFcgra0uEHHxs=
+dayjs@^1.9.5:
+  version "1.9.5"
+  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.9.5.tgz#fd49994ebe71639d2ce9575e97186642dfce9808"
+  integrity sha512-WULIw7UpW/E0y6VywewpbXAMH3d5cZijEhoHLwM+OMVbk/NtchKS/W+57H/0P1rqU7gHrAArjiRLHCUhgMQl6w==
 
 de-indent@^1.0.2:
   version "1.0.2"
@@ -3675,10 +3675,10 @@ filepond-plugin-image-preview@^4.6.4:
   resolved "https://registry.npm.taobao.org/filepond-plugin-image-preview/download/filepond-plugin-image-preview-4.6.4.tgz#19edade651559cf8c9fb97bcc8ce56af16ebae67"
   integrity sha1-Ge2t5lFVnPjJ+5e8yM5Wrxbrrmc=
 
-filepond@^4.22.0:
-  version "4.22.0"
-  resolved "https://registry.npm.taobao.org/filepond/download/filepond-4.22.0.tgz#5877f17bdc62651512f1e785d7bc85f84f1679a9"
-  integrity sha1-WHfxe9xiZRUS8eeF17yF+E8Weak=
+filepond@^4.23.1:
+  version "4.23.1"
+  resolved "https://registry.npmjs.org/filepond/-/filepond-4.23.1.tgz#fb6b9f09732ca524586765aee040edd5c5d453d9"
+  integrity sha512-OHMiVucJXCC5SXZPlwbDm7lgH4hJKvlXjkKNH6fZWVoh3IAhdUDMKh18JJGpO9PC3cCl1UYi8Aa1Le96SyXHYg==
 
 filesize@^3.6.1:
   version "3.6.1"
@@ -5930,18 +5930,18 @@ pkg-dir@^4.1.0:
   dependencies:
     find-up "^4.0.0"
 
-plain-kit@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.npm.taobao.org/plain-kit/download/plain-kit-0.4.3.tgz?cache=0&sync_timestamp=1603850166007&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fplain-kit%2Fdownload%2Fplain-kit-0.4.3.tgz#20844addf60df6cfb03306f790e5a0b8819e096c"
-  integrity sha1-IIRK3fYN9s+wMwb3kOWguIGeCWw=
+plain-kit@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.npmjs.org/plain-kit/-/plain-kit-0.4.5.tgz#cc33823f5f506f32970e2673671c6e4a1e1c4bcc"
+  integrity sha512-pMRKVLs6HNMGFlhyBtFXnUbLph1dor+S7tGsVpmw1ApxvNfEv9NNRcZ4eYjQftmcZXl7C063yGDjSq8ZQRFCKA==
   dependencies:
     animate.css "^4.1.1"
     core-js "^3.6.0"
-    dayjs "^1.9.4"
+    dayjs "^1.9.5"
     lodash "^4.17.20"
     qrcode "^1.4.4"
     qs "^6.9.4"
-    sweetalert2 "^10.8.1"
+    sweetalert2 "^10.9.0"
 
 pngjs@^3.3.0:
   version "3.4.0"
@@ -6801,10 +6801,10 @@ sass-loader@^10.0.0:
     schema-utils "^3.0.0"
     semver "^7.3.2"
 
-sass@^1.28.0:
-  version "1.28.0"
-  resolved "https://registry.npm.taobao.org/sass/download/sass-1.28.0.tgz#546f1308ff74cc4ec2ad735fd35dc18bc3f51f72"
-  integrity sha1-VG8TCP90zE7CrXNf013Bi8P1H3I=
+sass@^1.29.0:
+  version "1.29.0"
+  resolved "https://registry.npmjs.org/sass/-/sass-1.29.0.tgz#ec4e1842c146d8ea9258c28c141b8c2b7c6ab7f1"
+  integrity sha512-ZpwAUFgnvAUCdkjwPREny+17BpUj8nh5Yr6zKPGtLNTLrmtoRYIjm7njP24COhjJldjwW1dcv52Lpf4tNZVVRA==
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
@@ -7421,10 +7421,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-sweetalert2@^10.8.1:
-  version "10.8.1"
-  resolved "https://registry.npm.taobao.org/sweetalert2/download/sweetalert2-10.8.1.tgz#4266bd84bcc19170bc8e1bd179f207c67f910ea4"
-  integrity sha1-Qma9hLzBkXC8jhvRefIHxn+RDqQ=
+sweetalert2@^10.9.0:
+  version "10.9.1"
+  resolved "https://registry.npmjs.org/sweetalert2/-/sweetalert2-10.9.1.tgz#e3df396230d829925dbb30aadea5430b5e17dec1"
+  integrity sha512-StLC1DI646iYUWH4I35HDytfLaz5lBAyvc0rGZ1yx+U8y4NJIcOKbgAFocgM+J4PElGCB6/EZMfTt4JhUAtF5g==
 
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"

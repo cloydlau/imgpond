@@ -41,8 +41,8 @@
 import 'cropperjs/dist/cropper.css'
 import VueCropper from 'vue-cropperjs'
 import { file2Base64 } from '../utils'
-import { SweetAlert } from 'plain-kit'
-const { warn } = SweetAlert
+import { Swal } from 'plain-kit'
+const { warn } = Swal
 
 export default {
   props: {
