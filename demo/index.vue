@@ -35,6 +35,7 @@ export default {
           response: res => res.data.data
         },
         fixedRatioDeviation: 0.1,
+        accept: '.png'
       }
     }
   },

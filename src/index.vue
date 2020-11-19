@@ -196,6 +196,11 @@ export default {
     Accept () {
       return getFinalProp(accept, this.accept, '.jpg,.jpeg,.png')
     },
+    acceptWarning () {
+      if (this.Accept) {
+        return '仅支持' + this.Accept.replace(/\./g, ' ')
+      }
+    },
     FixedRatio () {
       return getFinalProp(fixedRatio, this.fixedRatio)
     },
@@ -435,7 +440,7 @@ export default {
         const extension = fileName.replace(/.+\./, '.').toLowerCase()
         const result = this.Accept.includes(extension)
         if (!result) {
-          warn('仅支持' + this.Accept)
+          warn(this.acceptWarning)
         }
         return result
       }
