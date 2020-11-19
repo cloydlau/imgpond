@@ -194,7 +194,7 @@ export default {
   },
   computed: {
     Accept () {
-      return getFinalProp(accept, this.accept, '.jpg,.jpeg,.png')
+      return getFinalProp(accept, this.accept, '.jpg,.jpeg,.png').replace(/[\s\f\n\r\t\v]/g, '')
     },
     acceptWarning () {
       if (this.Accept) {
