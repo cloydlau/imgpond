@@ -198,7 +198,7 @@ export default {
     },
     acceptWarning () {
       if (this.Accept) {
-        return '仅支持' + this.Accept.replace(/\./g, ' ')
+        return '支持格式：' + this.Accept.replace(/\./g, ' ').trim()
       }
     },
     FixedRatio () {
