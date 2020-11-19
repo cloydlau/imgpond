@@ -432,7 +432,7 @@ export default {
     },
     verifyExtension (fileName) {
       if (this.Accept) {
-        const extension = fileName.replace(/.+\./, '').toLowerCase()
+        const extension = fileName.replace(/.+\./, '.').toLowerCase()
         const result = this.Accept.includes(extension)
         if (!result) {
           warn('仅支持' + this.Accept)
