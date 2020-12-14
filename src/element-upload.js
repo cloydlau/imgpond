@@ -13,7 +13,7 @@ const { err } = Swal
 export default {
   methods: {
     sort () {
-      if (!this.Disabled && !this.sortablejs && poweredBy === 'element') {
+      if (!this.Disabled && poweredBy === 'element') {
         this.$nextTick(() => {
           this.sortablejs = Sortable.create(this.$refs['element-upload'].$el.firstChild, {
             animation: 500,

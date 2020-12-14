@@ -224,7 +224,7 @@ export default {
       }
     },
     Disabled () {
-      return this.disabled || (this.elForm || {}).disabled
+      return this.disabled || this.elForm?.disabled
     },
     isFull () {
       return this.files.length >= this.Count
