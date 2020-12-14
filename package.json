@@ -25,31 +25,30 @@
     "lib": "vue-cli-service build --target lib --name imgpond src/main.js"
   },
   "dependencies": {
-    "core-js": "^3.6.0",
-    "filepond": "^4.23.1",
-    "filepond-plugin-file-validate-type": "^1.2.5",
-    "filepond-plugin-image-preview": "^4.6.4",
-    "plain-kit": "^0.4.5",
-    "sortablejs": "^1.12.0",
-    "vue-cropperjs": "^4.1.0",
-    "vue-filepond": "^6.0.3"
+    "filepond": "*",
+    "filepond-plugin-file-validate-type": "*",
+    "filepond-plugin-image-preview": "*",
+    "plain-kit": "*",
+    "sortablejs": "*",
+    "vue-cropperjs": "*",
+    "vue-filepond": "*"
   },
   "peerDependencies": {
-    "element-ui": "^2.14.0",
-    "pic-viewer": ">= 0.2.7",
-    "vue": "^2.6.12"
+    "element-ui": "*",
+    "pic-viewer": "*",
+    "vue": "*"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.0",
-    "@vue/cli-service": "^4.5.0",
-    "axios": "^0.21.0",
-    "babel-plugin-import": "^1.13.1",
-    "element-ui": "^2.14.0",
-    "json-editor-vue": "^0.0.4",
-    "pic-viewer": "^0.2.7",
-    "sass": "^1.29.0",
-    "sass-loader": "^10.0.0",
-    "vue": "^2.6.12",
-    "vue-template-compiler": "^2.6.12"
+    "@vue/cli-plugin-babel": "*",
+    "@vue/cli-service": "*",
+    "axios": "*",
+    "babel-plugin-import": "*",
+    "element-ui": "*",
+    "json-editor-vue": "*",
+    "pic-viewer": "*",
+    "sass": "*",
+    "sass-loader": "*",
+    "vue": "*",
+    "vue-template-compiler": "*"
   }
 }
