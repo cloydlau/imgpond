@@ -38,13 +38,16 @@ export default {
         this.emitChange(fileList)
         this.loaded()
       }
+      this.$emit('change', file, fileList)
     },
     element_onRemove (file, fileList) {
       this.files.splice(fileList.indexOf(file), 1)
       this.emitChange(fileList)
+      this.$emit('remove', file, fileList)
     },
     element_beforeUpload (file) {
       console.log('before-upload')
+      this.$emit('before-upload', file)
     },
     element_onSuccess (response, file, fileList) {
       file.progress = 100
@@ -53,10 +56,12 @@ export default {
       this.files.push(file)
       this.emitChange(this.files)
       this.loaded()
+      this.$emit('success', response, file, fileList)
     },
     element_onError (e, file, fileList) {
       err(e)
       this.loaded()
+      this.$emit('error', e, file, fileList)
     },
     element_httpRequest (item) {
       const promise = api({

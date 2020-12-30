@@ -23,6 +23,7 @@
 element-ui集成说明：
 
 - element-ui是以外置依赖的方式引入的 所以不必担心代码体积和版本不一致等问题
+- 支持el-upload所有事件
 - 适配element-ui的el-form组件 支持el-form的全局disabled
 
 <br/>
@@ -38,7 +39,7 @@ $ yarn add imgpond
 ```js
 import Imgpond from 'imgpond'
 
-// 组件内引入
+// 局部引入
 components: { Imgpond }
 
 // 全局引入
@@ -75,7 +76,7 @@ Vue.use(Imgpond, { url: '接口地址' })
 
 <br/>
 
-requestConfig
+**requestConfig**
 
 ajax请求配置
 
@@ -128,7 +129,7 @@ Vue.use(Imgpond, {
 
 <br/>
 
-normalizer
+**normalizer**
 
 默认值：
 ```json
@@ -197,7 +198,7 @@ Vue.use(Imgpond, {
 
 <br/>
 
-proxy / localProxy:
+**proxy / localProxy**
 
 如果poweredBy配置为filepond 由于filepond的图片预览是用的canvas而非img元素 所以会存在跨域问题
 
@@ -233,6 +234,25 @@ module.exports = {
   },
 }
 ```
+
+<br/>
+
+**事件**
+
+el-upload:
+
+原生el-upload的事件并不是真正的事件 而是function属性
+
+Imgpond以真正事件的形式暴露 并去掉了on前缀
+
+
+```html
+<Imgpond @remove="onRemove" @beforeUpload="onBeforeUpload"/>
+```
+
+filepond:
+
+支持filepond所有事件
 
 <br/>
 

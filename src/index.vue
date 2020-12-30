@@ -26,6 +26,10 @@
         :on-success="element_onSuccess"
         :on-error="element_onError"
         :http-request="element_httpRequest"
+
+        :before-upload="file=>{$emit('before-upload',file)}"
+        :before-remove="(file, fileList)=>{$emit('before-remove',file, fileList)}"
+        :on-progress="(e, file, fileList)=>{$emit('progress',e, file, fileList)}"
       >
         <i class="el-icon-plus"/>
         <div class="el-upload__text">{{ this.fixedRatioText ? '宽高比' + this.fixedRatioText : '' }}</div>
@@ -38,21 +42,22 @@
         :allowDrop="false"
         :allowReorder="true"
         :allowMultiple="Count!==1"
+        styleItemPanelAspectRatio="1"
         labelFileTypeNotAllowed="不支持的格式，请删除"
         fileValidateTypeLabelExpectedTypes="仅支持{allButLastType}和{lastType}"
         :server="server"
         :files="files"
         :max-files="Count||null"
-        @init="handleFilePondInit"
         :beforeAddFile="beforeAddFile"
         :disabled="Disabled"
-        @onaddfilestart="onAddFileStart"
-        styleItemPanelAspectRatio="1"
-        @updatefiles="onUpdateFiles"
         :beforeRemoveFile="beforeRemoveFile"
         :onwarning="onWarning"
+        @init="handleFilePondInit"
+        @onaddfilestart="onAddFileStart"
+        @updatefiles="onUpdateFiles"
         @reorderfiles="emitChange"
         @activatefile="onActivatefile"
+        v-on="$listeners"
       />
 
       <el-dialog
@@ -367,8 +372,9 @@ export default {
     }
   },
   methods: {
-    onWarning () {
+    onWarning (files, fileList) {
       warn('超过数量上限，最多上传' + this.Count + '张')
+      this.$emit('exceed', files, fileList)
     },
     emitChange (files) {
       let tempList = files.map(v => v.source)
@@ -397,13 +403,15 @@ export default {
         this.emitChange(files)
       }
     },
-    onActivatefile ({ source, url }) {
+    onActivatefile (file) {
+      const { source, url } = file
       for (let [i, v] of this.files.entries()) {
         if ([url, source].includes(v.source)) {
           this.$refs.PicViewer.preview(i)
           break
         }
       }
+      this.$emit('preview', file)
     },
     handleFilePondInit () {
     },
