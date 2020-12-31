@@ -82,6 +82,7 @@ export default {
             this.element_onError('上传失败')
           }
         }).catch(e => {
+          console.error(e)
           this.element_onError('上传失败')
         })
       } else {

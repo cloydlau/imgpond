@@ -545,9 +545,11 @@ export default {
             })
           } else {
             console.error('[Imgpond] 上传失败，如果接口正常返回，请检查normalizer.response配置')
+            console.log(res)
             err('上传失败')
           }
         }).catch(e => {
+          console.error(e)
           err('上传失败')
         }).finally(e => {
           this.loaded()
