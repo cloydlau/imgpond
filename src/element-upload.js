@@ -13,9 +13,9 @@ const { err } = Swal
 export default {
   methods: {
     sort () {
-      if (!this.Disabled && !this.sortablejs && poweredBy === 'element') {
+      if (!this.Disabled && poweredBy === 'element') {
         this.$nextTick(() => {
-          this.sortablejs = Sortable.create(document.querySelector('.el-upload-list'), {
+          this.sortablejs = Sortable.create(this.$refs['element-upload'].$el.firstChild, {
             animation: 500,
             onEnd: ({ newIndex, oldIndex }) => {
               this.files.splice(newIndex, 0, this.files.splice(oldIndex, 1)[0])
@@ -87,6 +87,7 @@ export default {
             this.element_onError('上传失败')
           }
         }).catch(e => {
+          console.error(e)
           this.element_onError('上传失败')
         })
       } else {
